@@ -8,23 +8,29 @@ package MainPackage;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author FERDI
  */
 public class Config {
-    private static Connection mysqlConfig;
-    public static Connection configDB()throws SQLException {
+    Connection con;
+    Statement stm;
+    PreparedStatement pst;
+    
+    public void config() {
         try {
-            String url = "jdbc:mysql://localhost:3306/mahasiswa_sakti";
-            String user = "root";
+            Class.forName("com.mysql.jdbc.Driver");
+            String dbUrl = "jdbc:mysql://localhost/perpustakaan";
+            String username = "root";
             String password = "";
-            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-            mysqlConfig = DriverManager.getConnection(url, user, password);
-        } catch (SQLException e) {
-            System.err.println("Koneksi gagal" + e.getMessage());
+            con = DriverManager.getConnection(dbUrl, username, password);
+            stm = con.createStatement();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Koneksi Gagal" + e.getMessage());
         }
-        return mysqlConfig;
     }
 }

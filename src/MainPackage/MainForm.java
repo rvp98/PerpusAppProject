@@ -5,17 +5,47 @@
  */
 package MainPackage;
 
+import java.awt.CardLayout;
+import java.awt.MenuBar;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author FERDI
  */
 public class MainForm extends javax.swing.JFrame {
-
+    Connection con;
+    Statement stat;
+    ResultSet rs;
+    PreparedStatement pst;
+    String sql;
+    int errorCounter = 0;
+    
     /**
      * Creates new form MainForm
      */
     public MainForm() {
         initComponents();
+        Config DB = new Config();
+        DB.config();
+        con = DB.con;
+        stat = DB.stm;
+        pst = DB.pst;
+        MenuMaster.setEnabled(false);
+        MenuLaporan.setEnabled(false);
+        MenuTransaksi.setEnabled(false);
+        
+        fetchCbKategori();
+        fetchTableBuku();
+        fetchTableKategori();
     }
 
     /**
@@ -27,21 +57,678 @@ public class MainForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        MainPanel = new javax.swing.JPanel();
+        LoginPanel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txtUsername = new javax.swing.JTextField();
+        txtPassword = new javax.swing.JPasswordField();
+        btnLogin = new javax.swing.JButton();
+        DashboardPanel = new javax.swing.JPanel();
+        BukuPanel = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableBuku = new javax.swing.JTable();
+        txtKdBuku = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        txtJudulBuku = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        cbxKategoriBuku = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        txtPenulis = new javax.swing.JTextField();
+        txtPenerbit = new javax.swing.JTextField();
+        txtTahunTerbit = new javax.swing.JTextField();
+        jspStokBuku = new javax.swing.JSpinner();
+        panelActionMasterBuku = new javax.swing.JPanel();
+        btnSimpanBuku = new javax.swing.JButton();
+        btnResetBuku = new javax.swing.JButton();
+        btnHapusBuku = new javax.swing.JButton();
+        txtIdBuku = new javax.swing.JTextField();
+        KategoriPanel = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        txtNamaKategori = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tableKategori = new javax.swing.JTable();
+        panelActionMasterBuku1 = new javax.swing.JPanel();
+        btnSimpanKategori = new javax.swing.JButton();
+        btnResetKategori = new javax.swing.JButton();
+        btnHapusKategori = new javax.swing.JButton();
+        txtIdKategori = new javax.swing.JTextField();
+        MenuBar = new javax.swing.JMenuBar();
+        MenuMaster = new javax.swing.JMenu();
+        MenuItemBuku = new javax.swing.JMenuItem();
+        MenuItemKategori = new javax.swing.JMenuItem();
+        MenuItemRak = new javax.swing.JMenuItem();
+        MenuItemPetugas = new javax.swing.JMenuItem();
+        MenuItemAnggota = new javax.swing.JMenuItem();
+        MenuTransaksi = new javax.swing.JMenu();
+        MenuLaporan = new javax.swing.JMenu();
+        MenuExit = new javax.swing.JMenu();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        MainPanel.setLayout(new java.awt.CardLayout());
+
+        jLabel1.setFont(new java.awt.Font("Roboto", 0, 36)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("SISTEM INFORMASI PERPUSTAKAAN");
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setText("Username");
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel3.setText("Password");
+
+        btnLogin.setText("Log In");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout LoginPanelLayout = new javax.swing.GroupLayout(LoginPanel);
+        LoginPanel.setLayout(LoginPanelLayout);
+        LoginPanelLayout.setHorizontalGroup(
+            LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(LoginPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(LoginPanelLayout.createSequentialGroup()
+                .addGroup(LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(LoginPanelLayout.createSequentialGroup()
+                            .addGap(374, 374, 374)
+                            .addGroup(LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel2)))
+                        .addGroup(LoginPanelLayout.createSequentialGroup()
+                            .addGap(373, 373, 373)
+                            .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 360, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LoginPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(453, 453, 453))
+        );
+        LoginPanelLayout.setVerticalGroup(
+            LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(LoginPanelLayout.createSequentialGroup()
+                .addGap(131, 131, 131)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(329, Short.MAX_VALUE))
+        );
+
+        MainPanel.add(LoginPanel, "Login");
+
+        javax.swing.GroupLayout DashboardPanelLayout = new javax.swing.GroupLayout(DashboardPanel);
+        DashboardPanel.setLayout(DashboardPanelLayout);
+        DashboardPanelLayout.setHorizontalGroup(
+            DashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1024, Short.MAX_VALUE)
+        );
+        DashboardPanelLayout.setVerticalGroup(
+            DashboardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 700, Short.MAX_VALUE)
+        );
+
+        MainPanel.add(DashboardPanel, "Dashboard");
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel4.setText("MASTER DATA BUKU");
+
+        jLabel5.setText("Kode Buku");
+
+        tableBuku.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tableBuku.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableBukuMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tableBuku);
+
+        jLabel6.setText("Judul Buku");
+
+        jLabel7.setText("Kategori");
+
+        jLabel8.setText("Penulis");
+
+        jLabel9.setText("Penerbit");
+
+        jLabel10.setText("Tahun Terbit");
+
+        jLabel11.setText("Stok");
+
+        jspStokBuku.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+
+        panelActionMasterBuku.setBorder(javax.swing.BorderFactory.createTitledBorder("Aksi"));
+
+        btnSimpanBuku.setText("Simpan");
+        btnSimpanBuku.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSimpanBukuActionPerformed(evt);
+            }
+        });
+
+        btnResetBuku.setText("Cancel");
+        btnResetBuku.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetBukuActionPerformed(evt);
+            }
+        });
+
+        btnHapusBuku.setText("Hapus");
+        btnHapusBuku.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHapusBukuActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelActionMasterBukuLayout = new javax.swing.GroupLayout(panelActionMasterBuku);
+        panelActionMasterBuku.setLayout(panelActionMasterBukuLayout);
+        panelActionMasterBukuLayout.setHorizontalGroup(
+            panelActionMasterBukuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelActionMasterBukuLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelActionMasterBukuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btnResetBuku, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelActionMasterBukuLayout.createSequentialGroup()
+                        .addComponent(btnSimpanBuku)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnHapusBuku, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+        panelActionMasterBukuLayout.setVerticalGroup(
+            panelActionMasterBukuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelActionMasterBukuLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelActionMasterBukuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSimpanBuku)
+                    .addComponent(btnHapusBuku))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnResetBuku)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout BukuPanelLayout = new javax.swing.GroupLayout(BukuPanel);
+        BukuPanel.setLayout(BukuPanelLayout);
+        BukuPanelLayout.setHorizontalGroup(
+            BukuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(BukuPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(BukuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(BukuPanelLayout.createSequentialGroup()
+                        .addGroup(BukuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel4)
+                            .addGroup(BukuPanelLayout.createSequentialGroup()
+                                .addGroup(BukuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel9))
+                                .addGap(29, 29, 29)
+                                .addGroup(BukuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtPenerbit)
+                                    .addComponent(txtPenulis)
+                                    .addComponent(cbxKategoriBuku, 0, 229, Short.MAX_VALUE)
+                                    .addComponent(txtJudulBuku)))
+                            .addGroup(BukuPanelLayout.createSequentialGroup()
+                                .addGroup(BukuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel10)
+                                    .addComponent(jLabel11))
+                                .addGap(18, 18, 18)
+                                .addGroup(BukuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtTahunTerbit)
+                                    .addGroup(BukuPanelLayout.createSequentialGroup()
+                                        .addComponent(jspStokBuku, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addGroup(BukuPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(30, 30, 30)
+                                .addComponent(txtKdBuku, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(BukuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(panelActionMasterBuku, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtIdBuku, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 513, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        BukuPanelLayout.setVerticalGroup(
+            BukuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(BukuPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(BukuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtKdBuku, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtIdBuku, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(BukuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(txtJudulBuku, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(BukuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(cbxKategoriBuku, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(BukuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(BukuPanelLayout.createSequentialGroup()
+                        .addGroup(BukuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(txtPenulis, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(8, 8, 8)
+                        .addGroup(BukuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(txtPenerbit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(BukuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel10)
+                            .addComponent(txtTahunTerbit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(BukuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel11)
+                            .addComponent(jspStokBuku, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(panelActionMasterBuku, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        MainPanel.add(BukuPanel, "MasterBuku");
+
+        KategoriPanel.setName(""); // NOI18N
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel12.setText("MASTER KATEGORI BUKU");
+
+        jLabel13.setText("Nama Kategori");
+
+        tableKategori.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tableKategori.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableKategoriMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tableKategori);
+
+        panelActionMasterBuku1.setBorder(javax.swing.BorderFactory.createTitledBorder("Aksi"));
+
+        btnSimpanKategori.setText("Simpan");
+        btnSimpanKategori.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSimpanKategoriActionPerformed(evt);
+            }
+        });
+
+        btnResetKategori.setText("Cancel");
+        btnResetKategori.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetKategoriActionPerformed(evt);
+            }
+        });
+
+        btnHapusKategori.setText("Hapus");
+        btnHapusKategori.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHapusKategoriActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelActionMasterBuku1Layout = new javax.swing.GroupLayout(panelActionMasterBuku1);
+        panelActionMasterBuku1.setLayout(panelActionMasterBuku1Layout);
+        panelActionMasterBuku1Layout.setHorizontalGroup(
+            panelActionMasterBuku1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelActionMasterBuku1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelActionMasterBuku1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btnResetKategori, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelActionMasterBuku1Layout.createSequentialGroup()
+                        .addComponent(btnSimpanKategori)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnHapusKategori, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+        panelActionMasterBuku1Layout.setVerticalGroup(
+            panelActionMasterBuku1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelActionMasterBuku1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelActionMasterBuku1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSimpanKategori)
+                    .addComponent(btnHapusKategori))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnResetKategori)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout KategoriPanelLayout = new javax.swing.GroupLayout(KategoriPanel);
+        KategoriPanel.setLayout(KategoriPanelLayout);
+        KategoriPanelLayout.setHorizontalGroup(
+            KategoriPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(KategoriPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(KategoriPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(KategoriPanelLayout.createSequentialGroup()
+                        .addGroup(KategoriPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel12)
+                            .addGroup(KategoriPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel13)
+                                .addGap(18, 18, 18)
+                                .addGroup(KategoriPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(panelActionMasterBuku1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(KategoriPanelLayout.createSequentialGroup()
+                                        .addComponent(txtNamaKategori, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtIdKategori, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(0, 629, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1004, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        KategoriPanelLayout.setVerticalGroup(
+            KategoriPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(KategoriPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(KategoriPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(txtNamaKategori, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtIdKategori, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(panelActionMasterBuku1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        MainPanel.add(KategoriPanel, "MasterKategori");
+
+        MenuMaster.setText("Master");
+
+        MenuItemBuku.setText("Buku");
+        MenuItemBuku.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuItemBukuActionPerformed(evt);
+            }
+        });
+        MenuMaster.add(MenuItemBuku);
+
+        MenuItemKategori.setText("Kategori Buku");
+        MenuItemKategori.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuItemKategoriActionPerformed(evt);
+            }
+        });
+        MenuMaster.add(MenuItemKategori);
+
+        MenuItemRak.setText("Rak Buku");
+        MenuMaster.add(MenuItemRak);
+
+        MenuItemPetugas.setText("Petugas");
+        MenuMaster.add(MenuItemPetugas);
+
+        MenuItemAnggota.setText("Anggota");
+        MenuMaster.add(MenuItemAnggota);
+
+        MenuBar.add(MenuMaster);
+
+        MenuTransaksi.setText("Transaksi");
+        MenuBar.add(MenuTransaksi);
+
+        MenuLaporan.setText("Laporan");
+        MenuBar.add(MenuLaporan);
+
+        MenuExit.setText("Exit");
+        MenuExit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MenuExitMouseClicked(evt);
+            }
+        });
+        MenuBar.add(MenuExit);
+
+        setJMenuBar(MenuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(MainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        // TODO add your handling code here:
+        try {
+            sql = "SELECT * FROM user WHERE username ='"+txtUsername.getText()+"' AND password = MD5('"+txtPassword.getText()+"')";
+            rs = stat.executeQuery(sql);
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null, "Login Berhasil");
+                MenuMaster.setEnabled(true);
+                MenuLaporan.setEnabled(true);
+                MenuTransaksi.setEnabled(true);
+                CardLayout cardLayout = (CardLayout)(MainPanel.getLayout());
+                cardLayout.show(MainPanel, "Dashboard");
+            } else {
+                JOptionPane.showMessageDialog(null, "Maaf, kombinasi Username dan Password anda salah");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void MenuExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuExitMouseClicked
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_MenuExitMouseClicked
+
+    private void MenuItemBukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemBukuActionPerformed
+        // TODO add your handling code here:
+        CardLayout cardLayout = (CardLayout)(MainPanel.getLayout());
+        cardLayout.show(MainPanel, "MasterBuku");
+        txtIdBuku.setVisible(false);
+    }//GEN-LAST:event_MenuItemBukuActionPerformed
+
+    private void btnSimpanBukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanBukuActionPerformed
+        // TODO add your handling code here:
+        if (txtIdBuku.getText().equals("")) {
+            try {
+                sql = "INSERT INTO buku (kode_buku,id_kategori,judul_buku,penulis_buku,penerbit_buku,tahun_penerbit,stok) VALUES "
+                        + "('"+txtKdBuku.getText()+"',(SELECT id_kategori FROM kategori WHERE nama_kategori = '"+cbxKategoriBuku.getSelectedItem()+"'),"
+                        + "'"+txtJudulBuku.getText()+"','"+txtPenulis.getText()+"','"+txtPenerbit.getText()+"','"+txtTahunTerbit.getText()+"',"
+                        + "'"+jspStokBuku.getValue()+"')";
+                pst = con.prepareStatement(sql);
+                pst.execute();
+                JOptionPane.showMessageDialog(null, "Penyimpanan Data Berhasil");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Gagal Menyimpan Data" + e.getMessage());
+            }
+        } else {
+            try {
+                sql = "UPDATE buku SET kode_buku = '"+txtKdBuku.getText()+"', judul_buku = '"+txtJudulBuku.getText()+"', "
+                        + "penulis_buku = '"+txtPenulis.getText()+"', penerbit_buku = '"+txtPenerbit.getText()+"', "
+                        + "tahun_penerbit = '"+txtTahunTerbit.getText()+"', stok = '"+jspStokBuku.getValue()+"', "
+                        + "id_kategori = (SELECT id_kategori FROM kategori WHERE nama_kategori = '"+cbxKategoriBuku.getSelectedItem()+"') "
+                        + "WHERE id_buku = '"+txtIdBuku.getText()+"'";
+                pst = con.prepareStatement(sql);
+                pst.execute();
+                JOptionPane.showMessageDialog(null, "Data Berhasil Di Update");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Gagal Menyimpan Data" + e.getMessage());
+            }
+        }
+        fetchTableBuku();
+        resetFormBuku();
+    }//GEN-LAST:event_btnSimpanBukuActionPerformed
+
+    private void btnResetBukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetBukuActionPerformed
+        // TODO add your handling code here:
+        resetFormBuku();
+    }//GEN-LAST:event_btnResetBukuActionPerformed
+
+    private void btnHapusBukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusBukuActionPerformed
+        // TODO add your handling code here:
+        int opsi = JOptionPane.showConfirmDialog(null, "Benarkah anda ingin menghapus data ini ?", "Penghapusan Data", JOptionPane.YES_NO_OPTION);
+        if (opsi == JOptionPane.YES_OPTION) {
+            try {
+                String sql = "DELETE FROM buku WHERE id_buku = '"+txtIdBuku.getText()+"'";
+                pst = con.prepareStatement(sql);
+                pst.execute();
+                JOptionPane.showMessageDialog(null, "Hapus Data Berhasil");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Gagal Menghapus Data" + e.getMessage());
+            }
+        } else {
+        
+        }
+        fetchTableBuku();
+        resetFormBuku();
+    }//GEN-LAST:event_btnHapusBukuActionPerformed
+
+    private void tableBukuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableBukuMouseClicked
+        // TODO add your handling code here:
+        int baris = tableBuku.rowAtPoint(evt.getPoint());
+        String kd_buku = tableBuku.getValueAt(baris, 1).toString();
+        String judul_buku = tableBuku.getValueAt(baris, 2).toString();
+        String kategori = tableBuku.getValueAt(baris, 3).toString();
+        String penulis = tableBuku.getValueAt(baris, 4).toString();
+        String penerbit = tableBuku.getValueAt(baris, 5).toString();
+        String thn_terbit = tableBuku.getValueAt(baris, 6).toString();
+        int stok = Integer.parseInt(tableBuku.getValueAt(baris, 7).toString());
+        
+        try {
+            sql = "SELECT * FROM buku WHERE kode_buku = '"+kd_buku+"'";
+            rs = stat.executeQuery(sql);
+            if (rs.next()) {
+                txtIdBuku.setText(rs.getString("id_buku"));
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Data Tidak Ditemukan");
+        }
+        
+        txtKdBuku.setText(kd_buku);
+        txtJudulBuku.setText(judul_buku);
+        cbxKategoriBuku.setSelectedItem(kategori);
+        txtPenulis.setText(penulis);
+        txtPenerbit.setText(penerbit);
+        txtTahunTerbit.setText(thn_terbit);
+        jspStokBuku.setValue(stok);
+    }//GEN-LAST:event_tableBukuMouseClicked
+
+    private void MenuItemKategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItemKategoriActionPerformed
+        // TODO add your handling code here:
+        CardLayout cardLayout = (CardLayout)(MainPanel.getLayout());
+        cardLayout.show(MainPanel, "MasterKategori");
+        txtIdKategori.setVisible(false);
+    }//GEN-LAST:event_MenuItemKategoriActionPerformed
+
+    private void tableKategoriMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableKategoriMouseClicked
+        // TODO add your handling code here:
+        int baris = tableKategori.rowAtPoint(evt.getPoint());
+        String nama_kategori = tableKategori.getValueAt(baris, 1).toString();
+        try {
+            sql = "SELECT * FROM kategori WHERE nama_kategori = '"+nama_kategori+"'";
+            rs = stat.executeQuery(sql);
+            if (rs.next()) {
+                txtIdKategori.setText(rs.getString("id_kategori"));
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Data Tidak Ditemukan");
+        }
+        
+        txtNamaKategori.setText(nama_kategori);
+    }//GEN-LAST:event_tableKategoriMouseClicked
+
+    private void btnSimpanKategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanKategoriActionPerformed
+        // TODO add your handling code here:
+        if (txtIdKategori.getText().equals("")) {
+            try {
+                sql = "INSERT INTO kategori (nama_kategori) VALUES ('"+txtNamaKategori.getText()+"')";
+                pst = con.prepareStatement(sql);
+                pst.execute();
+                JOptionPane.showMessageDialog(null, "Penyimpanan Data Berhasil");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Gagal Menyimpan Data" + e.getMessage());
+            }
+        } else {
+            try {
+                sql = "UPDATE kategori SET nama_kategori = '"+txtNamaKategori.getText()+"' WHERE id_kategori = '"+txtIdKategori.getText()+"'";
+                pst = con.prepareStatement(sql);
+                pst.execute();
+                JOptionPane.showMessageDialog(null, "Data Berhasil Di Update");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Gagal Menyimpan Data" + e.getMessage());
+            }
+        }
+        fetchTableKategori();
+        resetFormKategori();
+    }//GEN-LAST:event_btnSimpanKategoriActionPerformed
+
+    private void btnResetKategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetKategoriActionPerformed
+        // TODO add your handling code here:
+        resetFormKategori();
+    }//GEN-LAST:event_btnResetKategoriActionPerformed
+
+    private void btnHapusKategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusKategoriActionPerformed
+        // TODO add your handling code here:
+        int opsi = JOptionPane.showConfirmDialog(null, "Benarkah anda ingin menghapus data ini ?", "Penghapusan Data", JOptionPane.YES_NO_OPTION);
+        if (opsi == JOptionPane.YES_OPTION) {
+            try {
+                String sql = "DELETE FROM kategori WHERE id_kategori = '"+txtIdKategori.getText()+"'";
+                pst = con.prepareStatement(sql);
+                pst.execute();
+                JOptionPane.showMessageDialog(null, "Hapus Data Berhasil");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Gagal Menghapus Data" + e.getMessage());
+            }
+        } else {
+            
+        }
+        fetchTableKategori();
+        resetFormKategori();
+    }//GEN-LAST:event_btnHapusKategoriActionPerformed
 
     /**
      * @param args the command line arguments
@@ -77,7 +764,142 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
     }
+    
+    private void fetchCbKategori() {
+        try {
+            sql = "SELECT * FROM kategori";
+            rs = stat.executeQuery(sql);
+            while (rs.next()) {
+                cbxKategoriBuku.addItem(rs.getString("nama_kategori"));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+    
+    private void fetchTableBuku() {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("No");
+        model.addColumn("Kode Buku");
+        model.addColumn("Judul Buku");
+        model.addColumn("Kategori");
+        model.addColumn("Penulis");
+        model.addColumn("Penerbit");
+        model.addColumn("Tahun Terbit");
+        model.addColumn("Stok");
+        
+        try {
+            int no = 1;
+            sql = "SELECT b.*,k.nama_kategori FROM buku AS b,kategori AS k WHERE b.id_kategori = k.id_kategori";
+            rs = stat.executeQuery(sql);
+            while (rs.next()) {
+                model.addRow(new Object[]{
+                    no++,
+                    rs.getString(2),
+                    rs.getString(4),
+                    rs.getString(9),
+                    rs.getString(5),
+                    rs.getString(6),
+                    rs.getString(7),
+                    rs.getString(8)
+                });
+            }
+            tableBuku.setModel(model);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+    
+    private void fetchTableKategori() {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("No");
+        model.addColumn("Nama Kategori");
+        
+        try {
+            int no = 1;
+            sql = "SELECT * FROM kategori";
+            rs = stat.executeQuery(sql);
+            while (rs.next()) {
+                model.addRow(new Object[]{
+                    no++,
+                    rs.getString(2)
+                });
+            }
+            tableKategori.setModel(model);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+    
+    private void resetFormBuku() {
+        txtIdBuku.setText("");
+        txtKdBuku.setText("");
+        txtJudulBuku.setText("");
+        cbxKategoriBuku.setSelectedIndex(0);
+        txtPenerbit.setText("");
+        txtPenulis.setText("");
+        txtTahunTerbit.setText("");
+        jspStokBuku.setValue(0);
+    }
+    
+    private void resetFormKategori() {
+        txtIdKategori.setText("");
+        txtNamaKategori.setText("");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel BukuPanel;
+    private javax.swing.JPanel DashboardPanel;
+    private javax.swing.JPanel KategoriPanel;
+    private javax.swing.JPanel LoginPanel;
+    private javax.swing.JPanel MainPanel;
+    private javax.swing.JMenuBar MenuBar;
+    private javax.swing.JMenu MenuExit;
+    private javax.swing.JMenuItem MenuItemAnggota;
+    private javax.swing.JMenuItem MenuItemBuku;
+    private javax.swing.JMenuItem MenuItemKategori;
+    private javax.swing.JMenuItem MenuItemPetugas;
+    private javax.swing.JMenuItem MenuItemRak;
+    private javax.swing.JMenu MenuLaporan;
+    private javax.swing.JMenu MenuMaster;
+    private javax.swing.JMenu MenuTransaksi;
+    private javax.swing.JButton btnHapusBuku;
+    private javax.swing.JButton btnHapusKategori;
+    private javax.swing.JButton btnLogin;
+    private javax.swing.JButton btnResetBuku;
+    private javax.swing.JButton btnResetKategori;
+    private javax.swing.JButton btnSimpanBuku;
+    private javax.swing.JButton btnSimpanKategori;
+    private javax.swing.JComboBox<String> cbxKategoriBuku;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSpinner jspStokBuku;
+    private javax.swing.JPanel panelActionMasterBuku;
+    private javax.swing.JPanel panelActionMasterBuku1;
+    private javax.swing.JTable tableBuku;
+    private javax.swing.JTable tableKategori;
+    private javax.swing.JTextField txtIdBuku;
+    private javax.swing.JTextField txtIdKategori;
+    private javax.swing.JTextField txtJudulBuku;
+    private javax.swing.JTextField txtKdBuku;
+    private javax.swing.JTextField txtNamaKategori;
+    private javax.swing.JPasswordField txtPassword;
+    private javax.swing.JTextField txtPenerbit;
+    private javax.swing.JTextField txtPenulis;
+    private javax.swing.JTextField txtTahunTerbit;
+    private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }
