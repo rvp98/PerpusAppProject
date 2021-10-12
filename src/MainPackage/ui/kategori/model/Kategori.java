@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTable;
 
 /**
  *
@@ -17,8 +18,20 @@ import java.util.logging.Logger;
  */
 public class Kategori extends Entity{
     
-    int idKategori;
-    String namaKategori;
+    private int idKategori;
+    private String namaKategori;
+    
+    public Kategori() {}
+    
+    public Kategori(int idKategori, String namaKategori) {
+        this.idKategori = idKategori;
+        this.namaKategori = namaKategori;
+    }
+    
+    public Kategori(JTable table) {
+        this.idKategori = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString());
+        this.namaKategori = table.getValueAt(table.getSelectedRow(), 1).toString();
+    }
     
     public Kategori(ResultSet rs) {
         try {
@@ -30,8 +43,8 @@ public class Kategori extends Entity{
     
     private void setFromResultSet(ResultSet rs) throws SQLException {
         try {
-            idKategori = rs.getInt("id_kategori");
-            namaKategori = rs.getString("nama_kategori");
+            setIdKategori(rs.getInt("id_kategori"));
+            setNamaKategori(rs.getString("nama_kategori"));
         } catch (SQLException e) {
             Logger.getLogger(Kategori.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -44,17 +57,46 @@ public class Kategori extends Entity{
 
     @Override
     public String toStringInsert() {
-        return "'" + namaKategori + "'";
+        return "'" + getNamaKategori() + "'";
     }
 
     @Override
     public String toStringUpdate() {
-        return "nama_kategori = '" + namaKategori + "'";
+        return "nama_kategori = '" + getNamaKategori() + "'";
     }
 
     @Override
     public String getPrimaryKey() {
-        return ""+idKategori;
+        return ""+getIdKategori();
     }
+
+    /**
+     * @return the idKategori
+     */
+    public int getIdKategori() {
+        return idKategori;
+    }
+
+    /**
+     * @param idKategori the idKategori to set
+     */
+    public void setIdKategori(int idKategori) {
+        this.idKategori = idKategori;
+    }
+
+    /**
+     * @return the namaKategori
+     */
+    public String getNamaKategori() {
+        return namaKategori;
+    }
+
+    /**
+     * @param namaKategori the namaKategori to set
+     */
+    public void setNamaKategori(String namaKategori) {
+        this.namaKategori = namaKategori;
+    }
+
     
 }

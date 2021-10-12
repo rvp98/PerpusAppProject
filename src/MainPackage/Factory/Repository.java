@@ -23,10 +23,21 @@ public abstract class Repository <T extends Entity> {
     Statement stm;
     Config config;
     
+    /**
+     * Fungsi ini akan mereturn string yang berisi nama table
+     */
     public abstract String tableName();
     
+    /**
+     * Fungsi ini akan mereturn sebuah object
+     * @param result adalah result yang berasal dari db
+     * dan perlu dimapping lagi ke dalam bentuk model
+     */
     public abstract T toEntity(ResultSet result);
     
+    /**
+     * Fungsi ini akan mereturn sebuah string yang berisi primary key
+     */
     public abstract String primaryKey();
     
     public Repository() {
