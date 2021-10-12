@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  * @author FERDI
  */
 public class Config {
-    Connection con;
+    public Connection con;
     Statement stm;
     PreparedStatement pst;
     
