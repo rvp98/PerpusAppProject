@@ -6,7 +6,7 @@
 package MainPackage.ui.kategori.repository;
 
 import MainPackage.Factory.Repository;
-import MainPackage.ui.kategori.model.Kategori;
+import MainPackage.ui.kategori.entity.Kategori;
 import java.sql.ResultSet;
 
 /**

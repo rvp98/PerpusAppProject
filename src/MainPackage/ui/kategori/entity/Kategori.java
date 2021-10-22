@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MainPackage.ui.kategori.model;
+package MainPackage.ui.kategori.entity;
 
 import MainPackage.Factory.Entity;
 import java.sql.ResultSet;
