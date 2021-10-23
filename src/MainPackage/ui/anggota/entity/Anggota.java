@@ -91,7 +91,7 @@ public class Anggota extends Entity {
 
     @Override
     public String getPrimaryKey() {
-        return ""+getIdAnggota();
+        return ""+getKodeAnggota();
     }
 
     /**

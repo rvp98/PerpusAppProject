@@ -101,7 +101,7 @@ public class Buku extends Entity {
 
     @Override
     public String getPrimaryKey() {
-        return ""+getIdBuku();
+        return ""+getKodeBuku();
     }
 
     /**

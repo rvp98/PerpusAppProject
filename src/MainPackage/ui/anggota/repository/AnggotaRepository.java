@@ -27,6 +27,6 @@ public class AnggotaRepository extends Repository<Anggota>{
 
     @Override
     public String primaryKey() {
-        return "id_anggota";
+        return "kode_anggota";
     }
 }

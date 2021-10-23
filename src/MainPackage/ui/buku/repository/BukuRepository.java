@@ -27,7 +27,7 @@ public class BukuRepository extends Repository<Buku> {
 
     @Override
     public String primaryKey() {
-        return "id_buku";
+        return "kode_buku";
     }
     
 }
