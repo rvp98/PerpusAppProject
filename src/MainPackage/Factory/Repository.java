@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -25,6 +26,7 @@ public abstract class Repository <T extends Entity> {
     
     /**
      * Fungsi ini akan mereturn string yang berisi nama table
+     * @return 
      */
     public abstract String tableName();
     
@@ -32,13 +34,24 @@ public abstract class Repository <T extends Entity> {
      * Fungsi ini akan mereturn sebuah object
      * @param result adalah result yang berasal dari db
      * dan perlu dimapping lagi ke dalam bentuk model
+     * @return 
      */
     public abstract T toEntity(ResultSet result);
     
     /**
      * Fungsi ini akan mereturn sebuah string yang berisi primary key
+     * @return 
      */
     public abstract String primaryKey();
+    
+    /**
+     * Fungsi ini akan mereturn List yang berisi 
+     * entity apa saja yang memiliki relasi dengan entity saat ini
+     * @return List of class Entity
+     */
+    public List<Repository> relation() {
+        return new ArrayList();
+    };
     
     public Repository() {
         initComponent();
@@ -85,7 +98,8 @@ public abstract class Repository <T extends Entity> {
         ResultSet result = null;
         ArrayList<T> list = new ArrayList<>();
         try {
-            result = stm.executeQuery("select * from "+tableName());
+            String query = "select * from "+ tableName() + getRelationQuery();
+            result = stm.executeQuery(query);
             while (result.next()) {
                 list.add(toEntity(result));
             }
@@ -100,7 +114,7 @@ public abstract class Repository <T extends Entity> {
         ResultSet result = null;
         T entity = null;
         try {
-            result = stm.executeQuery("select * from "+tableName()+" WHERE "+primaryKey()+" = '" + id + "'");
+            result = stm.executeQuery("select * from "+tableName()+ getRelationQuery() +" WHERE "+primaryKey()+" = '" + id + "'");
             ArrayList<T> list = new ArrayList<>();
             while (result.next()) {
                 list.add(toEntity(result));
@@ -137,5 +151,18 @@ public abstract class Repository <T extends Entity> {
             }
         }
         return isExist;
+    }
+    
+    private String getRelationQuery() {
+        String relationQuery = "";
+        if (!relation().isEmpty()) {
+            for(Repository repo : relation()) {
+                relationQuery += " join " + repo.tableName() 
+                    + " on " + repo.tableName() + "." + repo.primaryKey() 
+                    + " = " 
+                    + this.tableName() + "." + repo.primaryKey();
+            }
+        }
+        return relationQuery;
     }
 }
