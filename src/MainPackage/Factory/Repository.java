@@ -59,6 +59,7 @@ public abstract class Repository <T extends Entity> {
     
     private void initComponent() {
         try {
+            config = new Config();
             config.config();
             conn = (Connection) config.con;
             stm = conn.createStatement();

@@ -23,6 +23,10 @@ public class Kategori extends Entity{
     
     public Kategori() {}
     
+    public Kategori(String namaKategori) {
+        this.namaKategori = namaKategori;
+    }
+    
     public Kategori(int idKategori, String namaKategori) {
         this.idKategori = idKategori;
         this.namaKategori = namaKategori;
