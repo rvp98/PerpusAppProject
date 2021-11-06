@@ -88,6 +88,11 @@ public class KategoriView extends javax.swing.JPanel implements ViewContract<Kat
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblKategori.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblKategoriMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblKategori);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -154,6 +159,13 @@ public class KategoriView extends javax.swing.JPanel implements ViewContract<Kat
         repository.delete(selectedKategori.getIdKategori()+"");
         changeCondition(Constant.CurrState.create);
     }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void tblKategoriMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblKategoriMouseClicked
+        Kategori kategori = this.repository.get(tblKategori.getValueAt(tblKategori.getSelectedRow(), 0).toString());
+        selectedKategori = kategori;
+        tvNamaKategori.setText(kategori.getNamaKategori());
+        changeCondition(Constant.CurrState.update);
+    }//GEN-LAST:event_tblKategoriMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
