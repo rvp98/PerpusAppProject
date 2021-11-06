@@ -28,13 +28,14 @@ public class BukuView extends javax.swing.JPanel implements ViewContract<Buku> {
     
     /**
      * Creates new form BukuView
-     * @param repository
+     * @param repositoryBuku
+     * @param repositoryKategori
      */
     public BukuView(BukuRepository repositoryBuku, KategoriRepository repositoryKategori) {
         initComponents();
         this.repositoryBuku = repositoryBuku;
         this.repositoryKategori = repositoryKategori;
-        changeCondition(Constant.CurrState.create);
+        setDataTable();
         fetchCbKategori();
     }
 
@@ -193,9 +194,9 @@ public class BukuView extends javax.swing.JPanel implements ViewContract<Buku> {
                     .addComponent(tvKodeBuku, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tvJudulBuku, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbxKategoriBuku, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -228,16 +229,20 @@ public class BukuView extends javax.swing.JPanel implements ViewContract<Buku> {
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         if (validateData()) {
-            Buku buku = generateData();
-            repositoryBuku.insert(buku);
-            changeCondition(Constant.CurrState.create);
+            if(repositoryBuku.isIdExist(tvKodeBuku.getText())) {
+                showMessage("Kode buku sudah pernah digunakan, mohon gunakan kode yang lain");
+            } else {
+                Buku buku = generateData();
+                repositoryBuku.insert(buku);
+                changeCondition(Constant.CurrState.create);
+            }
         }
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         if (validateData()) {
             Buku buku = generateData();
-            repositoryBuku.update(buku, selectedBuku.getIdKategori()+"");
+            repositoryBuku.update(buku, selectedBuku.getKodeBuku());
             changeCondition(Constant.CurrState.create);
         }
     }//GEN-LAST:event_btnEditActionPerformed
@@ -256,7 +261,7 @@ public class BukuView extends javax.swing.JPanel implements ViewContract<Buku> {
         selectedBuku = buku;
         tvKodeBuku.setText(buku.getKodeBuku());
         tvJudulBuku.setText(buku.getJudulBuku());
-        cbxKategoriBuku.setSelectedItem(buku.getKategori().getNamaKategori());
+        setSelectedKategori(buku.getIdKategori());
         tvPenulis.setText(buku.getPenulisBuku());
         tvPenerbit.setText(buku.getPenulisBuku());
         tvTahunTerbit.setText(buku.getTahunPenerbit());
@@ -270,7 +275,7 @@ public class BukuView extends javax.swing.JPanel implements ViewContract<Buku> {
     private javax.swing.JButton btnCreate;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
-    private javax.swing.JComboBox<String> cbxKategoriBuku;
+    private javax.swing.JComboBox<Object> cbxKategoriBuku;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -356,26 +361,64 @@ public class BukuView extends javax.swing.JPanel implements ViewContract<Buku> {
         tvPenerbit.setText("");
         tvTahunTerbit.setText("");
         jsStokBuku.setValue(0);
+        cbxKategoriBuku.setSelectedIndex(0);
     }
 
     @Override
     public Buku generateData() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Kategori choosedKategori = (Kategori) cbxKategoriBuku.getSelectedItem();
+        int idBuku = selectedBuku != null ? selectedBuku.getIdBuku() : 0; 
+        int stok = (int) jsStokBuku.getValue();
+        return new Buku(
+                idBuku,
+                tvKodeBuku.getText(),
+                choosedKategori.getIdKategori(),
+                tvJudulBuku.getText(),
+                tvPenulis.getText(),
+                tvPenerbit.getText(),
+                tvTahunTerbit.getText(),
+                stok,
+                choosedKategori
+        );
     }
 
     @Override
     public boolean validateData() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean isValid = false;
+        if(tvKodeBuku.getText().isEmpty()) {
+            showMessage("Kode buku belum diisi");
+        } else if(tvJudulBuku.getText().isEmpty()) {
+            showMessage("Judul buku belum diisi");
+        } else if(tvPenulis.getText().isEmpty()) {
+            showMessage("Penulis buku belum diisi");
+        } else if(tvPenerbit.getText().isEmpty()) {
+            showMessage("Penerbit buku belum diisi");
+        } else if(tvTahunTerbit.getText().isEmpty()) {
+            showMessage("Tahun terbit buku belum diisi");
+        } else if(!(jsStokBuku.getValue() instanceof Integer)) {
+            showMessage("Stok harus diisi dengan angka");
+        } else {
+            isValid=true;
+        }
+        return isValid;
     }
     
     private void fetchCbKategori() {
         try {
-            ArrayList<Kategori> listKategori = repositoryKategori.get();
-            listKategori.forEach(kategori -> {
-                cbxKategoriBuku.addItem(kategori.getNamaKategori());
-            });
+            cbxKategoriBuku.removeAllItems();
+            repositoryKategori.get().forEach(cbxKategoriBuku::addItem);
         } catch (Exception e) {
             showMessage(e.getMessage());
+        }
+    }
+    
+    private void setSelectedKategori(int idKategori) {
+        for(int i = 0; i < cbxKategoriBuku.getItemCount(); i++) {
+            Kategori kategori = (Kategori) cbxKategoriBuku.getItemAt(i);
+            if(kategori.getIdKategori() == idKategori) {
+                cbxKategoriBuku.setSelectedIndex(i);
+                break;
+            }
         }
     }
 }

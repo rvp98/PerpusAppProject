@@ -102,5 +102,9 @@ public class Kategori extends Entity{
         this.namaKategori = namaKategori;
     }
 
-    
+    @Override
+    public String toString() {
+        return idKategori + " - " + namaKategori;
+    }
+
 }
