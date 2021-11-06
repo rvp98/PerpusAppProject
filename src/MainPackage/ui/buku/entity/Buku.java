@@ -6,6 +6,7 @@
 package MainPackage.ui.buku.entity;
 
 import MainPackage.Factory.Entity;
+import MainPackage.ui.kategori.entity.Kategori;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -25,10 +26,11 @@ public class Buku extends Entity {
     private String penerbitBuku;
     private String tahunPenerbit;
     private int stok;
+    private Kategori kategori;
 
     public Buku() {}
 
-    public Buku(int idBuku, String kodeBuku, int idKategori, String judulBuku, String penulisBuku, String penerbitBuku, String tahunPenerbit, int stok) {
+    public Buku(int idBuku, String kodeBuku, int idKategori, String judulBuku, String penulisBuku, String penerbitBuku, String tahunPenerbit, int stok, Kategori kategori) {
         this.idBuku = idBuku;
         this.kodeBuku = kodeBuku;
         this.idKategori = idKategori;
@@ -37,9 +39,10 @@ public class Buku extends Entity {
         this.penerbitBuku = penerbitBuku;
         this.tahunPenerbit = tahunPenerbit;
         this.stok = stok;
+        this.kategori = kategori;
     }
     
-    public Buku(JTable table) {
+    public Buku(JTable table, Kategori kategori) {
         this.idBuku = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString());
         this.kodeBuku = table.getValueAt(table.getSelectedRow(), 1).toString();
         this.idKategori = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 2).toString());
@@ -48,6 +51,7 @@ public class Buku extends Entity {
         this.penerbitBuku = table.getValueAt(table.getSelectedRow(), 5).toString();
         this.tahunPenerbit = table.getValueAt(table.getSelectedRow(), 6).toString();
         this.stok = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 7).toString());
+        this.kategori = kategori;
     }
     
     public Buku(ResultSet rs) {
@@ -66,7 +70,9 @@ public class Buku extends Entity {
             setJudulBuku(rs.getString("judul_buku"));
             setPenulisBuku(rs.getString("penulis_buku"));
             setPenerbitBuku(rs.getString("penerbit_buku"));
+            setTahunPenerbit(rs.getString("tahun_penerbit"));
             setStok(rs.getInt("stok"));
+            setKategori(new Kategori(rs));
         } catch (SQLException e) {
             Logger.getLogger(Buku.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -214,5 +220,19 @@ public class Buku extends Entity {
      */
     public void setStok(int stok) {
         this.stok = stok;
+    }
+    
+    /**
+     * @return the buku
+     */
+    public Kategori getKategori() {
+        return kategori;
+    }
+
+    /**
+     * @param buku the buku to set
+     */
+    public void setKategori(Kategori kategori) {
+        this.kategori = kategori;
     }
 }

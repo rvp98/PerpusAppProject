@@ -6,8 +6,13 @@
 package MainPackage.ui.buku.repository;
 
 import MainPackage.Factory.Repository;
+import MainPackage.ui.anggota.repository.AnggotaRepository;
 import MainPackage.ui.buku.entity.Buku;
+import MainPackage.ui.kategori.repository.KategoriRepository;
+import MainPackage.ui.petugas.repository.PetugasRepository;
 import java.sql.ResultSet;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  *
@@ -30,4 +35,10 @@ public class BukuRepository extends Repository<Buku> {
         return "kode_buku";
     }
     
+    @Override
+    public List<Repository> relation() {
+        return Arrays.asList(
+            new KategoriRepository()
+        );
+    }
 }

@@ -26,7 +26,7 @@ public class MainFormNew extends javax.swing.JFrame {
     private PetugasRepository petugasRepo = new PetugasRepository();
 
     private KategoriView kategoriView = new KategoriView(kategoriRepo);
-    private BukuView bukuView = new BukuView(bukuRepo);
+    private BukuView bukuView = new BukuView(bukuRepo, kategoriRepo);
     private PetugasView petugasView = new PetugasView(petugasRepo);
     private AnggotaView anggotaView = new AnggotaView(anggotaRepo);
     
@@ -83,11 +83,11 @@ public class MainFormNew extends javax.swing.JFrame {
         panelContent.setLayout(panelContentLayout);
         panelContentLayout.setHorizontalGroup(
             panelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 499, Short.MAX_VALUE)
+            .addGap(0, 800, Short.MAX_VALUE)
         );
         panelContentLayout.setVerticalGroup(
             panelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 422, Short.MAX_VALUE)
+            .addGap(0, 579, Short.MAX_VALUE)
         );
 
         getContentPane().add(panelContent, "card2");
