@@ -248,7 +248,7 @@ public class BukuView extends javax.swing.JPanel implements ViewContract<Buku> {
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        repositoryKategori.delete(selectedKategori.getIdKategori()+"");
+        repositoryBuku.delete(selectedBuku.getKodeBuku()+"");
         changeCondition(Constant.CurrState.create);
     }//GEN-LAST:event_btnDeleteActionPerformed
 

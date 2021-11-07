@@ -5,25 +5,32 @@
  */
 package MainPackage.ui.anggota;
 
+import MainPackage.Constant;
+import MainPackage.Factory.ViewContract;
 import MainPackage.ui.anggota.entity.Anggota;
 import MainPackage.ui.anggota.repository.AnggotaRepository;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author praset
  */
-public class AnggotaView extends javax.swing.JPanel {
+public class AnggotaView extends javax.swing.JPanel implements ViewContract<Anggota> {
     
-    private AnggotaRepository repository;
+    private AnggotaRepository repositoryAnggota;
     private Anggota selectedAnggota;
     
     /**
      * Creates new form AnggotaView
      * @param repository
      */
-    public AnggotaView(AnggotaRepository repository) {
+    public AnggotaView(AnggotaRepository repositoryAnggota) {
         initComponents();
-        this.repository = repository;
+        this.repositoryAnggota = repositoryAnggota;
+        setDataTable();
+        changeCondition(Constant.CurrState.create);
     }
 
     /**
@@ -35,19 +42,329 @@ public class AnggotaView extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jSpinner1 = new javax.swing.JSpinner();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblAnggota = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        tvKodeAnggota = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        tvNamaAnggota = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        cbxJk = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        tvNoTelepon = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txAlamat = new javax.swing.JTextArea();
+        btnCreate = new javax.swing.JButton();
+        btnEdit = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        btnClear = new javax.swing.JButton();
+
+        tblAnggota.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tblAnggota.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblAnggotaMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblAnggota);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setText("MASTER ANGGOTA");
+
+        jLabel2.setText("Kode Anggota");
+
+        jLabel3.setText("Nama Anggota");
+
+        jLabel4.setText("Jenis Kelamin");
+
+        cbxJk.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Laki - Laki", "Perempuan" }));
+
+        jLabel5.setText("No Telepon");
+
+        jLabel6.setText("Alamat");
+
+        txAlamat.setColumns(20);
+        txAlamat.setRows(5);
+        jScrollPane2.setViewportView(txAlamat);
+
+        btnCreate.setText("Tambah");
+        btnCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateActionPerformed(evt);
+            }
+        });
+
+        btnEdit.setText("Edit");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
+
+        btnDelete.setText("Hapus");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+
+        btnClear.setText("Clear");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(tvKodeAnggota)
+                            .addComponent(jLabel3)
+                            .addComponent(tvNamaAnggota)
+                            .addComponent(jLabel4)
+                            .addComponent(cbxJk, 0, 247, Short.MAX_VALUE)
+                            .addComponent(jLabel5)
+                            .addComponent(tvNoTelepon))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(28, 28, 28)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 197, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnClear, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnCreate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel6))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(tvKodeAnggota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tvNamaAnggota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cbxJk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tvNoTelepon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnCreate)
+                            .addComponent(btnEdit))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnClear)
+                            .addComponent(btnDelete))))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
+        if (validateData()) {
+            if(repositoryAnggota.isIdExist(tvKodeAnggota.getText())) {
+                showMessage("Kode anggota sudah pernah digunakan, mohon gunakan kode yang lain");
+            } else {
+                Anggota anggota = generateData();
+                repositoryAnggota.insert(anggota);
+                changeCondition(Constant.CurrState.create);
+            }
+        }
+    }//GEN-LAST:event_btnCreateActionPerformed
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        if (validateData()) {
+            Anggota anggota = generateData();
+            repositoryAnggota.update(anggota, selectedAnggota.getKodeAnggota());
+            changeCondition(Constant.CurrState.create);
+        }
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        repositoryAnggota.delete(selectedAnggota.getKodeAnggota()+"");
+        changeCondition(Constant.CurrState.create);
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        changeCondition(Constant.CurrState.create);
+    }//GEN-LAST:event_btnClearActionPerformed
+
+    private void tblAnggotaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAnggotaMouseClicked
+        Anggota anggota = this.repositoryAnggota.get(tblAnggota.getValueAt(tblAnggota.getSelectedRow(), 0).toString());
+        selectedAnggota = anggota;
+        tvKodeAnggota.setText(anggota.getKodeAnggota());
+        tvNamaAnggota.setText(anggota.getNamaAnggota());
+        cbxJk.setSelectedItem(anggota.getJkAnggota());
+        tvNoTelepon.setText(anggota.getNoTelpAnggota());
+        txAlamat.setText(anggota.getAlamatAnggota());
+        changeCondition(Constant.CurrState.update);
+    }//GEN-LAST:event_tblAnggotaMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnCreate;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnEdit;
+    private javax.swing.JComboBox<String> cbxJk;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSpinner jSpinner1;
+    private javax.swing.JTable tblAnggota;
+    private javax.swing.JTextField tvKodeAnggota;
+    private javax.swing.JTextField tvNamaAnggota;
+    private javax.swing.JTextField tvNoTelepon;
+    private javax.swing.JTextArea txAlamat;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void setDataTable() {
+        DefaultTableModel tableModel = generateDefaultTableModel();
+        try {
+            ArrayList<Anggota> listAnggota = repositoryAnggota.get();
+            listAnggota.forEach(anggota -> {
+                tableModel.addRow(new Object[]{
+                    anggota.getKodeAnggota(),
+                    anggota.getNamaAnggota(),
+                    anggota.getJkAnggota(),
+                    anggota.getNoTelpAnggota(),
+                    anggota.getAlamatAnggota()
+                });
+            });
+        } catch (Exception e) {
+            System.out.println("error when get data anggota");
+            System.out.println(e.getLocalizedMessage());
+        }
+        tblAnggota.setModel(tableModel);
+    }
+
+    @Override
+    public DefaultTableModel generateDefaultTableModel() {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Kode Anggota");
+        model.addColumn("Nama Anggota");
+        model.addColumn("Jenis Kelamin");
+        model.addColumn("No Telepon");
+        model.addColumn("Alamat");
+        return model;
+    }
+
+    @Override
+    public void showMessage(String message) {
+        JOptionPane.showMessageDialog(this, message);
+    }
+
+    @Override
+    public void changeCondition(Constant.CurrState state) {
+        switch(state) {
+            case create :
+                btnEdit.setEnabled(false);
+                btnDelete.setEnabled(false);
+                btnCreate.setEnabled(true);
+                clearData();
+                setDataTable();
+                break;
+            case update :
+                btnEdit.setEnabled(true);
+                btnDelete.setEnabled(true);
+                btnCreate.setEnabled(false);
+                break;
+        }
+    }
+
+    @Override
+    public void clearData() {
+        tvKodeAnggota.setText("");
+        tvNamaAnggota.setText("");
+        cbxJk.setSelectedIndex(0);
+        tvNoTelepon.setText("");
+        txAlamat.setText("");
+    }
+
+    @Override
+    public Anggota generateData() {
+        String jkAnggota = cbxJk.getSelectedItem().toString();
+        int idAnggota = selectedAnggota != null ? selectedAnggota.getIdAnggota() : 0;
+        return new Anggota(
+                idAnggota,
+                tvKodeAnggota.getText(),
+                tvNamaAnggota.getText(),
+                jkAnggota,
+                tvNoTelepon.getText(),
+                txAlamat.getText()
+        );
+    }
+
+    @Override
+    public boolean validateData() {
+        boolean isValid = false;
+        if(tvKodeAnggota.getText().isEmpty()) {
+            showMessage("Kode anggota belum diisi");
+        } else if(tvNamaAnggota.getText().isEmpty()) {
+            showMessage("Nama anggota belum diisi");
+        } else if(tvNoTelepon.getText().isEmpty()) {
+            showMessage("Nomor telepon belum diisi");
+        } else if(txAlamat.getText().isEmpty()) {
+            showMessage("Alamat belum diisi");
+        } else {
+            isValid=true;
+        }
+        return isValid;
+    }
 }
