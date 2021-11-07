@@ -20,26 +20,35 @@ public class Petugas extends Entity {
     
     private int idPetugas;
     private String namaPetugas;
+    private String jkPetugas;
     private String jabatanPetugas;
     private String noTelpPetugas;
     private String alamatPetugas;
+    private String usernamePetugas;
+    private String passwordPetugas;
 
     public Petugas() {}
     
-    public Petugas(int idPetugas, String namaPetugas, String jabatanPetugas, String noTelpPetugas, String alamatPetugas) {
+    public Petugas(int idPetugas, String namaPetugas, String jkPetugas, String jabatanPetugas, String noTelpPetugas, String alamatPetugas, String usernamePetugas, String passwordPetugas) {
         this.idPetugas = idPetugas;
         this.namaPetugas = namaPetugas;
+        this.jkPetugas = jkPetugas;
         this.jabatanPetugas = jabatanPetugas;
         this.noTelpPetugas = noTelpPetugas;
         this.alamatPetugas = alamatPetugas;
+        this.usernamePetugas = usernamePetugas;
+        this.passwordPetugas = passwordPetugas;
     }
 
     public Petugas(JTable table) {
         this.idPetugas = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString());
         this.namaPetugas = table.getValueAt(table.getSelectedRow(), 1).toString();
-        this.jabatanPetugas = table.getValueAt(table.getSelectedRow(), 2).toString();
-        this.noTelpPetugas = table.getValueAt(table.getSelectedRow(), 3).toString();
-        this.alamatPetugas = table.getValueAt(table.getSelectedRow(), 4).toString();
+        this.jkPetugas = table.getValueAt(table.getSelectedRow(), 2).toString();
+        this.jabatanPetugas = table.getValueAt(table.getSelectedRow(), 3).toString();
+        this.noTelpPetugas = table.getValueAt(table.getSelectedRow(), 4).toString();
+        this.alamatPetugas = table.getValueAt(table.getSelectedRow(), 5).toString();
+        this.usernamePetugas = table.getValueAt(table.getSelectedRow(), 6).toString();
+        this.passwordPetugas = table.getValueAt(table.getSelectedRow(), 7).toString();
     }
     
     public Petugas(ResultSet rs) {
@@ -54,9 +63,12 @@ public class Petugas extends Entity {
         try {
             setIdPetugas(rs.getInt("id_petugas"));
             setNamaPetugas(rs.getString("nama_petugas"));
+            setNamaPetugas(rs.getString("jk_petugas"));
             setJabatanPetugas(rs.getString("jabatan_petugas"));
             setNoTelpPetugas(rs.getString("no_telp_petugas"));
             setAlamatPetugas(rs.getString("alamat_petugas"));
+            setNamaPetugas(rs.getString("username"));
+            setNamaPetugas(rs.getString("password"));
         } catch (SQLException e) {
             Logger.getLogger(Petugas.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -64,23 +76,29 @@ public class Petugas extends Entity {
 
     @Override
     public String listColumn() {
-        return "nama_petugas, jabatan_petugas, no_telp_petugas, alamat_petugas";
+        return "nama_petugas, jk_petugas, jabatan_petugas, no_telp_petugas, alamat_petugas, username, password";
     }
 
     @Override
     public String toStringInsert() {
         return "'" + getNamaPetugas() + "'"
+                + "'" + getJkPetugas() + "'"
                 + "'" + getJabatanPetugas() + "'"
                 + "'" + getNoTelpPetugas() + "'"
-                + "'" + getAlamatPetugas() + "'";
+                + "'" + getAlamatPetugas() + "'"
+                + "'" + getUsernamePetugas() + "'"
+                + "'" + getPasswordPetugas() + "'";
     }
 
     @Override
     public String toStringUpdate() {
         return "nama_petugas = '" + getNamaPetugas() + "'"
+                + "jk_petugas = '" + getJkPetugas() + "'"
                 + "jabatan_petugas = '" + getJabatanPetugas() + "'"
                 + "no_telp_petugas = '" + getNoTelpPetugas() + "'"
-                + "alamat_petugas = '" + getAlamatPetugas() + "'";
+                + "alamat_petugas = '" + getAlamatPetugas() + "'"
+                + "username = '" + getUsernamePetugas() + "'"
+                + "password = '" + getPasswordPetugas() + "'";
     }
 
     @Override
@@ -158,4 +176,27 @@ public class Petugas extends Entity {
         this.alamatPetugas = alamatPetugas;
     }
     
+    public String getJkPetugas() {
+        return jkPetugas;
+    }
+    
+    public void setJkPetugas(String jkPetugas) {
+        this.jkPetugas = jkPetugas;
+    }
+    
+    public String getUsernamePetugas() {
+        return usernamePetugas;
+    }
+    
+    public void setUsernamePetugas(String usernamePetugas) {
+        this.usernamePetugas = usernamePetugas;
+    }
+    
+    public String getPasswordPetugas() {
+        return passwordPetugas;
+    }
+    
+    public void setPasswordPetugas(String passwordPetugas) {
+        this.passwordPetugas = passwordPetugas;
+    }
 }
