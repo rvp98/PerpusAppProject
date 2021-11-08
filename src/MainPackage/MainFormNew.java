@@ -13,6 +13,8 @@ import MainPackage.ui.kategori.KategoriView;
 import MainPackage.ui.kategori.repository.KategoriRepository;
 import MainPackage.ui.petugas.PetugasView;
 import MainPackage.ui.petugas.repository.PetugasRepository;
+import MainPackage.ui.rak.RakView;
+import MainPackage.ui.rak.repository.RakRepository;
 
 /**
  *
@@ -24,11 +26,13 @@ public class MainFormNew extends javax.swing.JFrame {
     private BukuRepository bukuRepo = new BukuRepository();
     private AnggotaRepository anggotaRepo = new AnggotaRepository();
     private PetugasRepository petugasRepo = new PetugasRepository();
+    private RakRepository rakRepo = new RakRepository();
 
     private KategoriView kategoriView = new KategoriView(kategoriRepo);
     private BukuView bukuView = new BukuView(bukuRepo, kategoriRepo);
     private PetugasView petugasView = new PetugasView(petugasRepo);
     private AnggotaView anggotaView = new AnggotaView(anggotaRepo);
+    private RakView rakView = new RakView(rakRepo);
     
     /**
      * Creates new form MainFormNew
@@ -43,6 +47,7 @@ public class MainFormNew extends javax.swing.JFrame {
         getContentPane().add(bukuView);
         getContentPane().add(petugasView);
         getContentPane().add(anggotaView);
+        getContentPane().add(rakView);
         hideAllPanel();
         kategoriView.setVisible(true);
     }
@@ -53,6 +58,7 @@ public class MainFormNew extends javax.swing.JFrame {
         bukuView.setVisible(false);
         petugasView.setVisible(false);
         anggotaView.setVisible(false);
+        rakView.setVisible(false);
     }
 
     /**
@@ -111,6 +117,11 @@ public class MainFormNew extends javax.swing.JFrame {
         jMenu1.add(menuBuku);
 
         menuRakBuku.setText("Rak Buku");
+        menuRakBuku.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuRakBukuActionPerformed(evt);
+            }
+        });
         jMenu1.add(menuRakBuku);
 
         menuPetugas.setText("Petugas");
@@ -164,6 +175,11 @@ public class MainFormNew extends javax.swing.JFrame {
         hideAllPanel();
         bukuView.setVisible(true);
     }//GEN-LAST:event_menuBukuActionPerformed
+
+    private void menuRakBukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRakBukuActionPerformed
+        hideAllPanel();
+        rakView.setVisible(true);
+    }//GEN-LAST:event_menuRakBukuActionPerformed
 
     /**
      * @param args the command line arguments
