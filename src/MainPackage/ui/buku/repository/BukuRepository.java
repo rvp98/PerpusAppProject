@@ -10,6 +10,7 @@ import MainPackage.ui.anggota.repository.AnggotaRepository;
 import MainPackage.ui.buku.entity.Buku;
 import MainPackage.ui.kategori.repository.KategoriRepository;
 import MainPackage.ui.petugas.repository.PetugasRepository;
+import MainPackage.ui.rak.repository.RakRepository;
 import java.sql.ResultSet;
 import java.util.Arrays;
 import java.util.List;
@@ -38,7 +39,8 @@ public class BukuRepository extends Repository<Buku> {
     @Override
     public List<Repository> relation() {
         return Arrays.asList(
-            new KategoriRepository()
+            new KategoriRepository(),
+            new RakRepository()
         );
     }
 }

@@ -11,6 +11,8 @@ import MainPackage.ui.buku.entity.Buku;
 import MainPackage.ui.kategori.entity.Kategori;
 import MainPackage.ui.buku.repository.BukuRepository;
 import MainPackage.ui.kategori.repository.KategoriRepository;
+import MainPackage.ui.rak.entity.Rak;
+import MainPackage.ui.rak.repository.RakRepository;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -23,20 +25,24 @@ public class BukuView extends javax.swing.JPanel implements ViewContract<Buku> {
 
     private BukuRepository repositoryBuku;
     private KategoriRepository repositoryKategori;
+    private RakRepository repositoryRak;
     private Buku selectedBuku;
     private Kategori selectedKategori;
+    private Rak selectedRak;
     
     /**
      * Creates new form BukuView
      * @param repositoryBuku
      * @param repositoryKategori
      */
-    public BukuView(BukuRepository repositoryBuku, KategoriRepository repositoryKategori) {
+    public BukuView(BukuRepository repositoryBuku, KategoriRepository repositoryKategori, RakRepository repositoryRak) {
         initComponents();
         this.repositoryBuku = repositoryBuku;
         this.repositoryKategori = repositoryKategori;
-        setDataTable();
+        this.repositoryRak = repositoryRak;
         fetchCbKategori();
+        fetchCbRak();
+        setDataTable();
     }
 
     /**
@@ -69,6 +75,8 @@ public class BukuView extends javax.swing.JPanel implements ViewContract<Buku> {
         btnEdit = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        cbxRak = new javax.swing.JComboBox<>();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("MASTER BUKU");
@@ -93,15 +101,25 @@ public class BukuView extends javax.swing.JPanel implements ViewContract<Buku> {
 
         jLabel2.setText("Kode Buku");
 
+        tvKodeBuku.setText("001");
+
         jLabel3.setText("Judul Buku");
+
+        tvJudulBuku.setText("Pras");
 
         jLabel4.setText("Kategori");
 
         jLabel5.setText("Penulis");
 
+        tvPenulis.setText("Pras");
+
         jLabel6.setText("Penerbit");
 
+        tvPenerbit.setText("Pras");
+
         jLabel7.setText("Tahun Terbit");
+
+        tvTahunTerbit.setText("2010");
 
         jLabel8.setText("Stok Buku");
 
@@ -133,6 +151,8 @@ public class BukuView extends javax.swing.JPanel implements ViewContract<Buku> {
             }
         });
 
+        jLabel9.setText("Rak");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -144,14 +164,14 @@ public class BukuView extends javax.swing.JPanel implements ViewContract<Buku> {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2)
-                                    .addComponent(tvKodeBuku)
-                                    .addComponent(jLabel4)
-                                    .addComponent(cbxKategoriBuku, 0, 236, Short.MAX_VALUE)
-                                    .addComponent(jLabel6)
-                                    .addComponent(tvPenerbit))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tvKodeBuku, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cbxKategoriBuku, javax.swing.GroupLayout.Alignment.LEADING, 0, 236, Short.MAX_VALUE)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tvPenerbit, javax.swing.GroupLayout.Alignment.LEADING))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(21, 21, 21)
@@ -165,9 +185,15 @@ public class BukuView extends javax.swing.JPanel implements ViewContract<Buku> {
                                             .addComponent(jLabel7)))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(18, 18, 18)
-                                        .addComponent(tvTahunTerbit))))
-                            .addComponent(jLabel8)
-                            .addComponent(jsStokBuku, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(cbxRak, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel9)
+                                                .addGap(0, 0, Short.MAX_VALUE))
+                                            .addComponent(tvTahunTerbit)))))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jsStokBuku, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -210,10 +236,14 @@ public class BukuView extends javax.swing.JPanel implements ViewContract<Buku> {
                     .addComponent(tvPenerbit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tvTahunTerbit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jsStokBuku, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jsStokBuku, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxRak, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCreate)
                     .addComponent(btnEdit))
@@ -266,6 +296,7 @@ public class BukuView extends javax.swing.JPanel implements ViewContract<Buku> {
         tvPenerbit.setText(buku.getPenulisBuku());
         tvTahunTerbit.setText(buku.getTahunPenerbit());
         jsStokBuku.setValue(buku.getStok());
+        setSelectedRak(buku.getIdRak());
         changeCondition(Constant.CurrState.update);
     }//GEN-LAST:event_tblBukuMouseClicked
 
@@ -276,6 +307,7 @@ public class BukuView extends javax.swing.JPanel implements ViewContract<Buku> {
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
     private javax.swing.JComboBox<Object> cbxKategoriBuku;
+    private javax.swing.JComboBox<Object> cbxRak;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -284,6 +316,7 @@ public class BukuView extends javax.swing.JPanel implements ViewContract<Buku> {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner jsStokBuku;
     private javax.swing.JTable tblBuku;
@@ -307,7 +340,8 @@ public class BukuView extends javax.swing.JPanel implements ViewContract<Buku> {
                     buku.getPenulisBuku(),
                     buku.getPenerbitBuku(),
                     buku.getTahunPenerbit(),
-                    buku.getStok()
+                    buku.getStok(),
+                    buku.getRak().getNamaRak()
                 });
             });
         } catch (Exception e) {
@@ -327,6 +361,7 @@ public class BukuView extends javax.swing.JPanel implements ViewContract<Buku> {
         model.addColumn("Penerbit");
         model.addColumn("Tahun Terbit");
         model.addColumn("Stok Buku");
+        model.addColumn("Rak Buku");
         return model;
     }
 
@@ -362,23 +397,27 @@ public class BukuView extends javax.swing.JPanel implements ViewContract<Buku> {
         tvTahunTerbit.setText("");
         jsStokBuku.setValue(0);
         cbxKategoriBuku.setSelectedIndex(0);
+        cbxRak.setSelectedIndex(0);
     }
 
     @Override
     public Buku generateData() {
         Kategori choosedKategori = (Kategori) cbxKategoriBuku.getSelectedItem();
+        Rak choosedRak = (Rak) cbxRak.getSelectedItem();
         int idBuku = selectedBuku != null ? selectedBuku.getIdBuku() : 0; 
         int stok = (int) jsStokBuku.getValue();
         return new Buku(
                 idBuku,
                 tvKodeBuku.getText(),
                 choosedKategori.getIdKategori(),
+                choosedRak.getIdRak(),
                 tvJudulBuku.getText(),
                 tvPenulis.getText(),
                 tvPenerbit.getText(),
                 tvTahunTerbit.getText(),
                 stok,
-                choosedKategori
+                choosedKategori,
+                choosedRak
         );
     }
 
@@ -412,11 +451,30 @@ public class BukuView extends javax.swing.JPanel implements ViewContract<Buku> {
         }
     }
     
+    private void fetchCbRak() {
+        try {
+            cbxRak.removeAllItems();
+            repositoryRak.get().forEach(cbxRak::addItem);
+        } catch (Exception e) {
+            showMessage(e.getMessage());
+        }
+    }
+    
     private void setSelectedKategori(int idKategori) {
         for(int i = 0; i < cbxKategoriBuku.getItemCount(); i++) {
             Kategori kategori = (Kategori) cbxKategoriBuku.getItemAt(i);
             if(kategori.getIdKategori() == idKategori) {
                 cbxKategoriBuku.setSelectedIndex(i);
+                break;
+            }
+        }
+    }
+    
+    private void setSelectedRak(int idRak) {
+        for(int i = 0; i < cbxRak.getItemCount(); i++) {
+            Rak rak = (Rak) cbxRak.getItemAt(i);
+            if(rak.getIdRak()== idRak) {
+                cbxRak.setSelectedIndex(i);
                 break;
             }
         }

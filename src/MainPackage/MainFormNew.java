@@ -29,7 +29,7 @@ public class MainFormNew extends javax.swing.JFrame {
     private RakRepository rakRepo = new RakRepository();
 
     private KategoriView kategoriView = new KategoriView(kategoriRepo);
-    private BukuView bukuView = new BukuView(bukuRepo, kategoriRepo);
+    private BukuView bukuView = new BukuView(bukuRepo, kategoriRepo, rakRepo);
     private PetugasView petugasView = new PetugasView(petugasRepo);
     private AnggotaView anggotaView = new AnggotaView(anggotaRepo);
     private RakView rakView = new RakView(rakRepo);
@@ -80,7 +80,7 @@ public class MainFormNew extends javax.swing.JFrame {
         menuAnggota = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
-        jMenu4 = new javax.swing.JMenu();
+        menuExit = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.CardLayout());
@@ -148,8 +148,13 @@ public class MainFormNew extends javax.swing.JFrame {
         jMenu3.setText("Laporan");
         jMenuBar1.add(jMenu3);
 
-        jMenu4.setText("Exit");
-        jMenuBar1.add(jMenu4);
+        menuExit.setText("Exit");
+        menuExit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuExitMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(menuExit);
 
         setJMenuBar(jMenuBar1);
 
@@ -180,6 +185,10 @@ public class MainFormNew extends javax.swing.JFrame {
         hideAllPanel();
         rakView.setVisible(true);
     }//GEN-LAST:event_menuRakBukuActionPerformed
+
+    private void menuExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuExitMouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_menuExitMouseClicked
 
     /**
      * @param args the command line arguments
@@ -218,10 +227,10 @@ public class MainFormNew extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem menuAnggota;
     private javax.swing.JMenuItem menuBuku;
+    private javax.swing.JMenu menuExit;
     private javax.swing.JMenuItem menuKategori;
     private javax.swing.JMenuItem menuPetugas;
     private javax.swing.JMenuItem menuRakBuku;

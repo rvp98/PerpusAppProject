@@ -118,5 +118,10 @@ public class Rak extends Entity {
     public void setLokasiRak(String lokasiRak) {
         this.lokasiRak = lokasiRak;
     }
+
+    @Override
+    public String toString() {
+        return idRak +" - "+ namaRak;
+    }
     
 }
