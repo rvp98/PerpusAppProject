@@ -81,23 +81,23 @@ public class Petugas extends Entity {
 
     @Override
     public String toStringInsert() {
-        return "'" + getNamaPetugas() + "'"
-                + "'" + getJkPetugas() + "'"
-                + "'" + getJabatanPetugas() + "'"
-                + "'" + getNoTelpPetugas() + "'"
-                + "'" + getAlamatPetugas() + "'"
-                + "'" + getUsernamePetugas() + "'"
+        return "'" + getNamaPetugas() + "',"
+                + "'" + getJkPetugas() + "',"
+                + "'" + getJabatanPetugas() + "',"
+                + "'" + getNoTelpPetugas() + "',"
+                + "'" + getAlamatPetugas() + "',"
+                + "'" + getUsernamePetugas() + "',"
                 + "'" + getPasswordPetugas() + "'";
     }
 
     @Override
     public String toStringUpdate() {
-        return "nama_petugas = '" + getNamaPetugas() + "'"
-                + "jk_petugas = '" + getJkPetugas() + "'"
-                + "jabatan_petugas = '" + getJabatanPetugas() + "'"
-                + "no_telp_petugas = '" + getNoTelpPetugas() + "'"
-                + "alamat_petugas = '" + getAlamatPetugas() + "'"
-                + "username = '" + getUsernamePetugas() + "'"
+        return "nama_petugas = '" + getNamaPetugas() + "',"
+                + "jk_petugas = '" + getJkPetugas() + "',"
+                + "jabatan_petugas = '" + getJabatanPetugas() + "',"
+                + "no_telp_petugas = '" + getNoTelpPetugas() + "',"
+                + "alamat_petugas = '" + getAlamatPetugas() + "',"
+                + "username = '" + getUsernamePetugas() + "',"
                 + "password = '" + getPasswordPetugas() + "'";
     }
 
