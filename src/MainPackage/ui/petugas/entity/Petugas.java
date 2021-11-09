@@ -63,12 +63,12 @@ public class Petugas extends Entity {
         try {
             setIdPetugas(rs.getInt("id_petugas"));
             setNamaPetugas(rs.getString("nama_petugas"));
-            setNamaPetugas(rs.getString("jk_petugas"));
+            setJkPetugas(rs.getString("jk_petugas"));
             setJabatanPetugas(rs.getString("jabatan_petugas"));
             setNoTelpPetugas(rs.getString("no_telp_petugas"));
             setAlamatPetugas(rs.getString("alamat_petugas"));
-            setNamaPetugas(rs.getString("username"));
-            setNamaPetugas(rs.getString("password"));
+            setUsernamePetugas(rs.getString("username"));
+            setPasswordPetugas(rs.getString("password"));
         } catch (SQLException e) {
             Logger.getLogger(Petugas.class.getName()).log(Level.SEVERE, null, e);
         }
