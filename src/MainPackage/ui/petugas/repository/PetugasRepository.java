@@ -8,6 +8,8 @@ package MainPackage.ui.petugas.repository;
 import MainPackage.Factory.Repository;
 import MainPackage.ui.petugas.entity.Petugas;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -30,4 +32,33 @@ public class PetugasRepository extends Repository<Petugas>{
         return "id_petugas";
     }
     
+    public Petugas getUsername(String username) {
+        ResultSet result = null;
+        Petugas entity = null;
+        try {
+            result = stm.executeQuery("select * from "+tableName()+ getRelationQuery() +" WHERE username = '" + username + "'");
+            ArrayList<Petugas> list = new ArrayList<>();
+            while (result.next()) {
+                list.add(toEntity(result));
+            }
+            if(!list.isEmpty()) {
+                entity = list.get(0);
+            }
+        } catch (SQLException e) {
+            System.out.println("error when get data "+tableName()+" by id");
+            e.printStackTrace();
+        }
+        return entity;
+    }
+    
+    public boolean isUsernameExist(String username) {
+        boolean isExist = false;
+        Petugas data = getUsername(username);
+        if(data != null) {
+            if(data.getPrimaryKey() != null) {
+                isExist = true;
+            }
+        }
+        return isExist;
+    }
 }

@@ -9,14 +9,11 @@ import MainPackage.Constant;
 import MainPackage.Factory.ViewContract;
 import MainPackage.ui.petugas.entity.Petugas;
 import MainPackage.ui.petugas.repository.PetugasRepository;
+import MainPackage.util.HashingHelper;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Arrays;
 
 /**
  *
@@ -29,7 +26,7 @@ public class PetugasView extends javax.swing.JPanel implements ViewContract<Petu
     
     /**
      * Creates new form PetugasView
-     * @param repository
+     * @param repositoryPetugas
      */
     public PetugasView(PetugasRepository repositoryPetugas) {
         initComponents();
@@ -226,6 +223,8 @@ public class PetugasView extends javax.swing.JPanel implements ViewContract<Petu
         if (validateData()) {
             if(repositoryPetugas.isUsernameExist(tvUsername.getText())) {
                 showMessage("Username sudah digunakan, mohon gunakan username yang lain");
+            } else if(tvPassword.getPassword().length == 0) {
+                showMessage("Password belum diisi");
             } else {
                 Petugas petugas = generateData();
                 repositoryPetugas.insert(petugas);
@@ -236,13 +235,9 @@ public class PetugasView extends javax.swing.JPanel implements ViewContract<Petu
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         if (validateData()) {
-            if(repositoryPetugas.isUsernameExist(tvUsername.getText())) {
-                showMessage("Username sudah digunakan, mohon gunakan username yang lain");
-            } else {
-                Petugas petugas = generateData();
-                repositoryPetugas.update(petugas, selectedPetugas.getPrimaryKey()+"");
-                changeCondition(Constant.CurrState.create);
-            }
+            Petugas petugas = generateData();
+            repositoryPetugas.update(petugas, selectedPetugas.getPrimaryKey()+"");
+            changeCondition(Constant.CurrState.create);
         }
     }//GEN-LAST:event_btnEditActionPerformed
 
@@ -336,6 +331,7 @@ public class PetugasView extends javax.swing.JPanel implements ViewContract<Petu
                 btnEdit.setEnabled(false);
                 btnDelete.setEnabled(false);
                 btnCreate.setEnabled(true);
+                tvUsername.setEnabled(true);
                 clearData();
                 setDataTable();
                 break;
@@ -343,6 +339,7 @@ public class PetugasView extends javax.swing.JPanel implements ViewContract<Petu
                 btnEdit.setEnabled(true);
                 btnDelete.setEnabled(true);
                 btnCreate.setEnabled(false);
+                tvUsername.setEnabled(false);
                 break;
         }
     }
@@ -362,7 +359,12 @@ public class PetugasView extends javax.swing.JPanel implements ViewContract<Petu
         int idPetugas = selectedPetugas != null ? selectedPetugas.getIdPetugas() : 0;
         String jkPetugas = cbxJk.getSelectedItem().toString();
         String jabatanPetugas = "petugas";
-        String pwd = tvPassword.getText();
+        String pwd = Arrays.toString(tvPassword.getPassword());
+        if(tvPassword.getPassword().length > 0) {
+            pwd = HashingHelper.toMd5(pwd);
+        } else if (selectedPetugas != null) {
+            pwd = selectedPetugas.getPasswordPetugas();
+        }
         return new Petugas(
                 idPetugas,
                 tvNamaPetugas.getText(),
@@ -371,7 +373,7 @@ public class PetugasView extends javax.swing.JPanel implements ViewContract<Petu
                 tvNoTelepon.getText(),
                 taAlamat.getText(),
                 tvUsername.getText(),
-                md5(pwd)
+                pwd
         );
     }
 
@@ -386,29 +388,9 @@ public class PetugasView extends javax.swing.JPanel implements ViewContract<Petu
             showMessage("Alamat belum diisi");
         } else if(tvUsername.getText().isEmpty()) {
             showMessage("Username belum diisi");
-        } else if(tvPassword.getText().isEmpty()) {
-            showMessage("Password belum diisi");
         } else {
             isValid=true;
         }
         return isValid;
-    }
-    
-    public static String md5(String pwd) {
-        String digest = null;
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] hash = md.digest(pwd.getBytes("UTF-8"));
-            StringBuilder sb = new StringBuilder(2 * hash.length);
-            for (byte b : hash) {
-                sb.append(String.format("%02x", b & 0xff));
-            }
-            digest = sb.toString();
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(PetugasView.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(PetugasView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return digest;
     }
 }
