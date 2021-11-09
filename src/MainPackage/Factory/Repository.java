@@ -129,6 +129,25 @@ public abstract class Repository <T extends Entity> {
         }
         return entity;
     }
+    
+    public T get_u(String username) {
+        ResultSet result = null;
+        T entity = null;
+        try {
+            result = stm.executeQuery("select * from "+tableName()+ getRelationQuery() +" WHERE username = '" + username + "'");
+            ArrayList<T> list = new ArrayList<>();
+            while (result.next()) {
+                list.add(toEntity(result));
+            }
+            if(!list.isEmpty()) {
+                entity = list.get(0);
+            }
+        } catch (SQLException e) {
+            System.out.println("error when get data "+tableName()+" by id");
+            e.printStackTrace();
+        }
+        return entity;
+    }
 
     public boolean delete(String id) {
         try {
@@ -146,6 +165,17 @@ public abstract class Repository <T extends Entity> {
     public boolean isIdExist(String id) {
         boolean isExist = false;
         T data = get(id);
+        if(data != null) {
+            if(data.getPrimaryKey() != null) {
+                isExist = true;
+            }
+        }
+        return isExist;
+    }
+    
+    public boolean isUsernameExist(String username) {
+        boolean isExist = false;
+        T data = get_u(username);
         if(data != null) {
             if(data.getPrimaryKey() != null) {
                 isExist = true;
