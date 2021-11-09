@@ -43,6 +43,7 @@ public class BukuView extends javax.swing.JPanel implements ViewContract<Buku> {
         fetchCbKategori();
         fetchCbRak();
         setDataTable();
+        changeCondition(Constant.CurrState.create);
     }
 
     /**
