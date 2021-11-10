@@ -7,6 +7,7 @@ package MainPackage.ui.petugas.repository;
 
 import MainPackage.Factory.Repository;
 import MainPackage.ui.petugas.entity.Petugas;
+import MainPackage.util.HashingHelper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -30,6 +31,25 @@ public class PetugasRepository extends Repository<Petugas>{
     @Override
     public String primaryKey() {
         return "id_petugas";
+    }
+    
+    public Petugas login(String username, String password) {
+        ResultSet result = null;
+        Petugas entity = null;
+        try {
+            result = stm.executeQuery("select * from "+tableName()+ getRelationQuery() +" WHERE username = '" + username + "' AND password = '"+ HashingHelper.toMd5(password) +"'");
+            ArrayList<Petugas> list = new ArrayList<>();
+            while (result.next()) {
+                list.add(toEntity(result));
+            }
+            if(!list.isEmpty()) {
+                entity = list.get(0);
+            }
+        } catch (SQLException e) {
+            System.out.println("error when get data "+tableName()+" by id");
+            e.printStackTrace();
+        }
+        return entity;
     }
     
     public Petugas getUsername(String username) {

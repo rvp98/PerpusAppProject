@@ -11,10 +11,13 @@ import MainPackage.ui.buku.BukuView;
 import MainPackage.ui.buku.repository.BukuRepository;
 import MainPackage.ui.kategori.KategoriView;
 import MainPackage.ui.kategori.repository.KategoriRepository;
+import MainPackage.ui.login.LoginView;
 import MainPackage.ui.petugas.PetugasView;
+import MainPackage.ui.petugas.entity.Petugas;
 import MainPackage.ui.petugas.repository.PetugasRepository;
 import MainPackage.ui.rak.RakView;
 import MainPackage.ui.rak.repository.RakRepository;
+import MainPackage.util.SessionHelper;
 
 /**
  *
@@ -36,6 +39,7 @@ public class MainForm extends javax.swing.JFrame {
     
     /**
      * Creates new form MainFormNew
+     * @param sessionPetugas
      */
     public MainForm() {
         initComponents();
@@ -220,7 +224,11 @@ public class MainForm extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new MainForm().setVisible(true);
+            if (SessionHelper.sessionPetugas == null) {
+                new LoginView().setVisible(true);
+            } else {
+                new MainForm().setVisible(true);
+            }
         });
     }
 

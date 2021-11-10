@@ -3,21 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MainPackage;
+package MainPackage.util;
+
+import MainPackage.ui.petugas.entity.Petugas;
 
 /**
  *
  * @author praset
  */
-public class Constant {
-    public static enum CurrState {
-        create,
-        update
-    }
-    
-    public static enum PetugasRole {
-        owner,
-        admin,
-        petugas
-    }
+public class SessionHelper {
+    public static Petugas sessionPetugas;
 }
