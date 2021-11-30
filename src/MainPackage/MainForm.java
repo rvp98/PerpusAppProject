@@ -13,7 +13,6 @@ import MainPackage.ui.kategori.KategoriView;
 import MainPackage.ui.kategori.repository.KategoriRepository;
 import MainPackage.ui.login.LoginView;
 import MainPackage.ui.petugas.PetugasView;
-import MainPackage.ui.petugas.entity.Petugas;
 import MainPackage.ui.petugas.repository.PetugasRepository;
 import MainPackage.ui.rak.RakView;
 import MainPackage.ui.rak.repository.RakRepository;
@@ -76,14 +75,14 @@ public class MainForm extends javax.swing.JFrame {
 
         panelContent = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        menuMaster = new javax.swing.JMenu();
         menuKategori = new javax.swing.JMenuItem();
         menuBuku = new javax.swing.JMenuItem();
         menuRakBuku = new javax.swing.JMenuItem();
         menuPetugas = new javax.swing.JMenuItem();
         menuAnggota = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenu3 = new javax.swing.JMenu();
+        menuTransaksi = new javax.swing.JMenu();
+        menuLaporan = new javax.swing.JMenu();
         menuExit = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -97,12 +96,12 @@ public class MainForm extends javax.swing.JFrame {
         );
         panelContentLayout.setVerticalGroup(
             panelContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 579, Short.MAX_VALUE)
+            .addGap(0, 578, Short.MAX_VALUE)
         );
 
         getContentPane().add(panelContent, "card2");
 
-        jMenu1.setText("Master");
+        menuMaster.setText("Master");
 
         menuKategori.setText("Kategori");
         menuKategori.addActionListener(new java.awt.event.ActionListener() {
@@ -110,7 +109,7 @@ public class MainForm extends javax.swing.JFrame {
                 menuKategoriActionPerformed(evt);
             }
         });
-        jMenu1.add(menuKategori);
+        menuMaster.add(menuKategori);
 
         menuBuku.setText("Buku");
         menuBuku.addActionListener(new java.awt.event.ActionListener() {
@@ -118,7 +117,7 @@ public class MainForm extends javax.swing.JFrame {
                 menuBukuActionPerformed(evt);
             }
         });
-        jMenu1.add(menuBuku);
+        menuMaster.add(menuBuku);
 
         menuRakBuku.setText("Rak Buku");
         menuRakBuku.addActionListener(new java.awt.event.ActionListener() {
@@ -126,7 +125,7 @@ public class MainForm extends javax.swing.JFrame {
                 menuRakBukuActionPerformed(evt);
             }
         });
-        jMenu1.add(menuRakBuku);
+        menuMaster.add(menuRakBuku);
 
         menuPetugas.setText("Petugas");
         menuPetugas.addActionListener(new java.awt.event.ActionListener() {
@@ -134,7 +133,7 @@ public class MainForm extends javax.swing.JFrame {
                 menuPetugasActionPerformed(evt);
             }
         });
-        jMenu1.add(menuPetugas);
+        menuMaster.add(menuPetugas);
 
         menuAnggota.setText("Anggota");
         menuAnggota.addActionListener(new java.awt.event.ActionListener() {
@@ -142,15 +141,15 @@ public class MainForm extends javax.swing.JFrame {
                 menuAnggotaActionPerformed(evt);
             }
         });
-        jMenu1.add(menuAnggota);
+        menuMaster.add(menuAnggota);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(menuMaster);
 
-        jMenu2.setText("Transaksi");
-        jMenuBar1.add(jMenu2);
+        menuTransaksi.setText("Transaksi");
+        jMenuBar1.add(menuTransaksi);
 
-        jMenu3.setText("Laporan");
-        jMenuBar1.add(jMenu3);
+        menuLaporan.setText("Laporan");
+        jMenuBar1.add(menuLaporan);
 
         menuExit.setText("Exit");
         menuExit.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -233,16 +232,16 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem menuAnggota;
     private javax.swing.JMenuItem menuBuku;
     private javax.swing.JMenu menuExit;
     private javax.swing.JMenuItem menuKategori;
+    private javax.swing.JMenu menuLaporan;
+    private javax.swing.JMenu menuMaster;
     private javax.swing.JMenuItem menuPetugas;
     private javax.swing.JMenuItem menuRakBuku;
+    private javax.swing.JMenu menuTransaksi;
     private javax.swing.JPanel panelContent;
     // End of variables declaration//GEN-END:variables
 }
