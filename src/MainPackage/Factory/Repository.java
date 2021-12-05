@@ -75,6 +75,7 @@ public abstract class Repository <T extends Entity> {
             String sql = "insert into "+ tableName()+"("+data.listColumn()+") values(" + data.toStringInsert() + ")";
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.execute();
+            pst.closeOnCompletion();
             isSuccess = true;
         } catch (SQLException e) {
             System.out.println("error when insert "+tableName());
@@ -88,6 +89,7 @@ public abstract class Repository <T extends Entity> {
         try {
             int result = stm.executeUpdate("update "+tableName()+" SET " + data.toStringUpdate() + " Where "+primaryKey()+" = '" + id + "'");
             isSuccess = true;
+            stm.closeOnCompletion();
         } catch (SQLException e) {
             System.out.println("error when update "+tableName());
             e.printStackTrace();
@@ -104,6 +106,7 @@ public abstract class Repository <T extends Entity> {
             while (result.next()) {
                 list.add(toEntity(result));
             }
+            stm.closeOnCompletion();
         } catch (SQLException e) {
             System.out.println("error when get all data"+tableName());
             e.printStackTrace();
@@ -123,6 +126,7 @@ public abstract class Repository <T extends Entity> {
             if(!list.isEmpty()) {
                 entity = list.get(0);
             }
+            stm.closeOnCompletion();
         } catch (SQLException e) {
             System.out.println("error when get data "+tableName()+" by id");
             e.printStackTrace();
@@ -142,6 +146,7 @@ public abstract class Repository <T extends Entity> {
             while (result.next()) {
                 list.add(toEntity(result));
             }
+            stm.closeOnCompletion();
         } catch (SQLException e) {
             System.out.println("error when get data "+tableName()+" by id");
             e.printStackTrace();
@@ -154,6 +159,7 @@ public abstract class Repository <T extends Entity> {
             String sql = "delete from "+tableName()+" where "+primaryKey()+" ='" + id + "'";
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.execute();
+            pst.closeOnCompletion();
             return true;
         } catch (SQLException e) {
             System.out.println("error when delete "+tableName());

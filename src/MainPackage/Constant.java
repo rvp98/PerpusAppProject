@@ -26,5 +26,5 @@ public class Constant {
         desc
     }
     
-    public static String defaultDateFormat = "yyyy-mm-dd";
+    public static String defaultDateFormat = "yyyy-MM-dd";
 }

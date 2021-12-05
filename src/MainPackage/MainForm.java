@@ -14,6 +14,8 @@ import MainPackage.ui.kategori.repository.KategoriRepository;
 import MainPackage.ui.login.LoginView;
 import MainPackage.ui.peminjaman.PeminjamanView;
 import MainPackage.ui.peminjaman.repository.PeminjamanRepository;
+import MainPackage.ui.pengembalian.PengembalianView;
+import MainPackage.ui.pengembalian.repository.PengembalianRepository;
 import MainPackage.ui.petugas.PetugasView;
 import MainPackage.ui.petugas.repository.PetugasRepository;
 import MainPackage.ui.rak.RakView;
@@ -32,6 +34,7 @@ public class MainForm extends javax.swing.JFrame {
     private PetugasRepository petugasRepo = new PetugasRepository();
     private RakRepository rakRepo = new RakRepository();
     private PeminjamanRepository peminjamanRepo = new PeminjamanRepository();
+    private PengembalianRepository pengembalianRepo = new PengembalianRepository();
 
     private KategoriView kategoriView = new KategoriView(kategoriRepo);
     private BukuView bukuView = new BukuView(bukuRepo, kategoriRepo, rakRepo);
@@ -39,6 +42,7 @@ public class MainForm extends javax.swing.JFrame {
     private AnggotaView anggotaView = new AnggotaView(anggotaRepo);
     private RakView rakView = new RakView(rakRepo);
     private PeminjamanView peminjamanView = new PeminjamanView(peminjamanRepo, bukuRepo, anggotaRepo);
+    private PengembalianView pengembalianView = new PengembalianView(pengembalianRepo, peminjamanRepo);
     
     /**
      * Creates new form MainFormNew
@@ -56,6 +60,7 @@ public class MainForm extends javax.swing.JFrame {
         getContentPane().add(anggotaView);
         getContentPane().add(rakView);
         getContentPane().add(peminjamanView);
+        getContentPane().add(pengembalianView);
         hideAllPanel();
         kategoriView.setVisible(true);
     }
@@ -68,6 +73,7 @@ public class MainForm extends javax.swing.JFrame {
         anggotaView.setVisible(false);
         rakView.setVisible(false);
         peminjamanView.setVisible(false);
+        pengembalianView.setVisible(false);
     }
 
     /**
@@ -219,7 +225,8 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_menuExitMouseClicked
 
     private void menuPengembalianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPengembalianActionPerformed
-        // TODO add your handling code here:
+        hideAllPanel();
+        pengembalianView.setVisible(true);
     }//GEN-LAST:event_menuPengembalianActionPerformed
 
     private void menuPeminjamanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPeminjamanActionPerformed

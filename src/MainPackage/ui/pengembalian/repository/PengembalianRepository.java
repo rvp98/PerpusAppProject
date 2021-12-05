@@ -6,10 +6,8 @@
 package MainPackage.ui.pengembalian.repository;
 
 import MainPackage.Factory.Repository;
-import MainPackage.ui.anggota.repository.AnggotaRepository;
-import MainPackage.ui.buku.repository.BukuRepository;
+import MainPackage.ui.peminjaman.repository.PeminjamanRepository;
 import MainPackage.ui.pengembalian.entity.Pengembalian;
-import MainPackage.ui.petugas.repository.PetugasRepository;
 import java.sql.ResultSet;
 import java.util.Arrays;
 import java.util.List;
@@ -38,9 +36,7 @@ public class PengembalianRepository extends Repository<Pengembalian>{
     @Override
     public List<Repository> relation() {
         return Arrays.asList(
-                new BukuRepository(), 
-                new AnggotaRepository(), 
-                new PetugasRepository()
+                new PeminjamanRepository()
         );
     }
     

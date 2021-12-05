@@ -178,5 +178,9 @@ public class Peminjaman extends Entity {
     public void setPetugas(Petugas petugas) {
         this.petugas = petugas;
     }
-    
+
+    @Override
+    public String toString() {
+        return getIdPeminjaman() + "-" + getAnggota().getNamaAnggota() + "-" + getTanggalPinjam();
+    }
 }

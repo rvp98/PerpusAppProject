@@ -202,12 +202,13 @@ public class PeminjamanView extends javax.swing.JPanel implements ViewContract<P
             Peminjaman peminjaman = generateData();
             repoPeminjaman.insert(peminjaman);
             setDataTable();
+            clearData();
         }
     }//GEN-LAST:event_btnPinjamActionPerformed
 
     private void buttonClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonClearActionPerformed
         clearData();
-        changeCondition(Constant.CurrState.update);
+        changeCondition(Constant.CurrState.create);
     }//GEN-LAST:event_buttonClearActionPerformed
 
     private void tblPeminjamanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPeminjamanMouseClicked
@@ -261,8 +262,8 @@ public class PeminjamanView extends javax.swing.JPanel implements ViewContract<P
     public void setDataTable() {
         DefaultTableModel tableModel = generateDefaultTableModel();
         try {
-            ArrayList<Peminjaman> listPetugas = repoPeminjaman.get();
-            listPetugas.forEach(peminjaman -> {
+            ArrayList<Peminjaman> listPeminjaman = repoPeminjaman.get();
+            listPeminjaman.forEach(peminjaman -> {
                 tableModel.addRow(new Object[]{
                     peminjaman.getIdPeminjaman(),
                     peminjaman.getTanggalPinjam(),
@@ -322,8 +323,8 @@ public class PeminjamanView extends javax.swing.JPanel implements ViewContract<P
 
     @Override
     public void clearData() {
-        cbxBuku.setSelectedIndex(0);
-        cbxPeminjam.setSelectedIndex(0);
+        cbxBuku.setSelectedIndex(-1);
+        cbxPeminjam.setSelectedIndex(-1);
         datePickPinjam.setDate(new Date());
     }
 
@@ -333,7 +334,7 @@ public class PeminjamanView extends javax.swing.JPanel implements ViewContract<P
         if (selectedPeminjaman != null) {
             idPeminjaman = selectedPeminjaman.getIdPeminjaman();
         }
-        SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat formater = new SimpleDateFormat(Constant.defaultDateFormat);
         String datePinjam = formater.format(datePickPinjam.getDate());
         return new Peminjaman(
             idPeminjaman,
