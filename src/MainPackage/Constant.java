@@ -20,4 +20,11 @@ public class Constant {
         admin,
         petugas
     }
+    
+    public static enum SortBy {
+        asc,
+        desc
+    }
+    
+    public static String defaultDateFormat = "yyyy-mm-dd";
 }

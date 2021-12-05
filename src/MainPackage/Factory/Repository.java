@@ -129,6 +129,25 @@ public abstract class Repository <T extends Entity> {
         }
         return entity;
     }
+    
+    public ArrayList<T> select(String where) {
+        ResultSet result = null;
+        ArrayList<T> list = new ArrayList<>();
+        try {
+            String query = "select * from "+tableName()+ getRelationQuery();
+            if(!where.isEmpty()) {
+                query += " WHERE "+where;
+            }
+            result = stm.executeQuery(query);
+            while (result.next()) {
+                list.add(toEntity(result));
+            }
+        } catch (SQLException e) {
+            System.out.println("error when get data "+tableName()+" by id");
+            e.printStackTrace();
+        }
+        return list;
+    }
 
     public boolean delete(String id) {
         try {
@@ -162,6 +181,9 @@ public abstract class Repository <T extends Entity> {
                     + " on " + repo.tableName() + "." + repo.primaryKey() 
                     + " = " 
                     + this.tableName() + "." + repo.primaryKey();
+                if (!repo.relation().isEmpty()) {
+                    relationQuery += repo.getRelationQuery();
+                }
             }
         }
         return relationQuery;

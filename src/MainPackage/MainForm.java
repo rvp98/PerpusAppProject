@@ -12,6 +12,8 @@ import MainPackage.ui.buku.repository.BukuRepository;
 import MainPackage.ui.kategori.KategoriView;
 import MainPackage.ui.kategori.repository.KategoriRepository;
 import MainPackage.ui.login.LoginView;
+import MainPackage.ui.peminjaman.PeminjamanView;
+import MainPackage.ui.peminjaman.repository.PeminjamanRepository;
 import MainPackage.ui.petugas.PetugasView;
 import MainPackage.ui.petugas.repository.PetugasRepository;
 import MainPackage.ui.rak.RakView;
@@ -29,12 +31,14 @@ public class MainForm extends javax.swing.JFrame {
     private AnggotaRepository anggotaRepo = new AnggotaRepository();
     private PetugasRepository petugasRepo = new PetugasRepository();
     private RakRepository rakRepo = new RakRepository();
+    private PeminjamanRepository peminjamanRepo = new PeminjamanRepository();
 
     private KategoriView kategoriView = new KategoriView(kategoriRepo);
     private BukuView bukuView = new BukuView(bukuRepo, kategoriRepo, rakRepo);
     private PetugasView petugasView = new PetugasView(petugasRepo);
     private AnggotaView anggotaView = new AnggotaView(anggotaRepo);
     private RakView rakView = new RakView(rakRepo);
+    private PeminjamanView peminjamanView = new PeminjamanView(peminjamanRepo, bukuRepo, anggotaRepo);
     
     /**
      * Creates new form MainFormNew
@@ -51,6 +55,7 @@ public class MainForm extends javax.swing.JFrame {
         getContentPane().add(petugasView);
         getContentPane().add(anggotaView);
         getContentPane().add(rakView);
+        getContentPane().add(peminjamanView);
         hideAllPanel();
         kategoriView.setVisible(true);
     }
@@ -62,6 +67,7 @@ public class MainForm extends javax.swing.JFrame {
         petugasView.setVisible(false);
         anggotaView.setVisible(false);
         rakView.setVisible(false);
+        peminjamanView.setVisible(false);
     }
 
     /**
@@ -82,6 +88,8 @@ public class MainForm extends javax.swing.JFrame {
         menuPetugas = new javax.swing.JMenuItem();
         menuAnggota = new javax.swing.JMenuItem();
         menuTransaksi = new javax.swing.JMenu();
+        menuPeminjaman = new javax.swing.JMenuItem();
+        menuPengembalian = new javax.swing.JMenuItem();
         menuLaporan = new javax.swing.JMenu();
         menuExit = new javax.swing.JMenu();
 
@@ -146,6 +154,23 @@ public class MainForm extends javax.swing.JFrame {
         jMenuBar1.add(menuMaster);
 
         menuTransaksi.setText("Transaksi");
+
+        menuPeminjaman.setText("Peminjaman");
+        menuPeminjaman.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuPeminjamanActionPerformed(evt);
+            }
+        });
+        menuTransaksi.add(menuPeminjaman);
+
+        menuPengembalian.setText("Pengembalian");
+        menuPengembalian.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuPengembalianActionPerformed(evt);
+            }
+        });
+        menuTransaksi.add(menuPengembalian);
+
         jMenuBar1.add(menuTransaksi);
 
         menuLaporan.setText("Laporan");
@@ -193,6 +218,15 @@ public class MainForm extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_menuExitMouseClicked
 
+    private void menuPengembalianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPengembalianActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuPengembalianActionPerformed
+
+    private void menuPeminjamanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPeminjamanActionPerformed
+        hideAllPanel();
+        peminjamanView.setVisible(true);
+    }//GEN-LAST:event_menuPeminjamanActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -239,6 +273,8 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuKategori;
     private javax.swing.JMenu menuLaporan;
     private javax.swing.JMenu menuMaster;
+    private javax.swing.JMenuItem menuPeminjaman;
+    private javax.swing.JMenuItem menuPengembalian;
     private javax.swing.JMenuItem menuPetugas;
     private javax.swing.JMenuItem menuRakBuku;
     private javax.swing.JMenu menuTransaksi;

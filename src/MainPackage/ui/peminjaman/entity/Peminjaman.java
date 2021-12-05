@@ -71,25 +71,23 @@ public class Peminjaman extends Entity {
 
     @Override
     public String listColumn() {
-        return "tanggal_pinjam, tanggal_kembali, id_buku, id_petugas, id_anggota";
+        return "tanggal_pinjam, kode_buku, id_petugas, kode_anggota";
     }
 
     @Override
     public String toStringInsert() {
         return "'" + tanggalPinjam + "',"
-                + "'" + tanggalKembali + "',"
-                + "'" + buku.getIdBuku() + "',"
+                + "'" + buku.getKodeBuku()+ "',"
                 + "'" + petugas.getIdPetugas() + "',"
-                + "'" + anggota.getIdAnggota() + "'";
+                + "'" + anggota.getKodeAnggota()+ "'";
     }
 
     @Override
     public String toStringUpdate() {
         return "tanggal_pinjam = '" + tanggalPinjam + "',"
-                + "tanggal_kembali = '" + tanggalKembali + "',"
-                + "id_buku = '" + buku.getIdBuku() + "',"
+                + "kode_buku = '" + buku.getKodeBuku()+ "',"
                 + "id_petugas = '" + petugas.getIdPetugas() + "',"
-                + "id_anggota = '" + anggota.getIdAnggota() + "'";
+                + "kode_anggota = '" + anggota.getKodeAnggota()+ "'";
     }
 
     @Override

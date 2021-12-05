@@ -273,4 +273,8 @@ public class Buku extends Entity {
         this.rak = rak;
     }
 
+    @Override
+    public String toString() {
+        return kodeBuku + " - " + judulBuku;
+    }
 }

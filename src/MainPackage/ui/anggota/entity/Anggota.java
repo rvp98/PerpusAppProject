@@ -177,5 +177,9 @@ public class Anggota extends Entity {
     public void setAlamatAnggota(String alamatAnggota) {
         this.alamatAnggota = alamatAnggota;
     }
-    
+
+    @Override
+    public String toString() {
+        return kodeAnggota + " - " + namaAnggota;
+    }
 }
