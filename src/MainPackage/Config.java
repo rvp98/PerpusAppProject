@@ -33,4 +33,18 @@ public class Config {
             JOptionPane.showMessageDialog(null, "Koneksi Gagal" + e.getMessage());
         }
     }
+    
+    private static Connection mysqlConfig;
+    public static Connection configDB()throws SQLException {
+        try {
+            String url = "jdbc:mysql://localhost/perpustakaan";
+            String user = "root";
+            String password = "";
+            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+            mysqlConfig = DriverManager.getConnection(url, user, password);
+        } catch (SQLException e) {
+            System.err.println("Koneksi gagal" + e.getMessage());
+        }
+        return mysqlConfig;
+    }
 }

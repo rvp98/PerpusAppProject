@@ -20,6 +20,9 @@ import MainPackage.ui.petugas.PetugasView;
 import MainPackage.ui.petugas.repository.PetugasRepository;
 import MainPackage.ui.rak.RakView;
 import MainPackage.ui.rak.repository.RakRepository;
+import MainPackage.ui.laporan_peminjaman.LaporanPeminjamanView;
+import MainPackage.ui.laporan_peminjaman_buku.LaporanPeminjamanBukuView;
+import MainPackage.ui.laporan_petugas.LaporanPetugasView;
 import MainPackage.util.SessionHelper;
 
 /**
@@ -43,6 +46,9 @@ public class MainForm extends javax.swing.JFrame {
     private RakView rakView = new RakView(rakRepo);
     private PeminjamanView peminjamanView = new PeminjamanView(peminjamanRepo, bukuRepo, anggotaRepo);
     private PengembalianView pengembalianView = new PengembalianView(pengembalianRepo, peminjamanRepo);
+    private LaporanPeminjamanView laporanPeminjamanView = new LaporanPeminjamanView();
+    private LaporanPeminjamanBukuView laporanPeminjamanBukuView = new LaporanPeminjamanBukuView();
+    private LaporanPetugasView laporanPetugasView = new LaporanPetugasView();
     
     /**
      * Creates new form MainFormNew
@@ -61,6 +67,9 @@ public class MainForm extends javax.swing.JFrame {
         getContentPane().add(rakView);
         getContentPane().add(peminjamanView);
         getContentPane().add(pengembalianView);
+        getContentPane().add(laporanPeminjamanView);
+        getContentPane().add(laporanPeminjamanBukuView);
+        getContentPane().add(laporanPetugasView);
         hideAllPanel();
         kategoriView.setVisible(true);
     }
@@ -74,6 +83,9 @@ public class MainForm extends javax.swing.JFrame {
         rakView.setVisible(false);
         peminjamanView.setVisible(false);
         pengembalianView.setVisible(false);
+        laporanPeminjamanView.setVisible(false);
+        laporanPeminjamanBukuView.setVisible(false);
+        laporanPetugasView.setVisible(false);
     }
 
     /**
@@ -97,6 +109,9 @@ public class MainForm extends javax.swing.JFrame {
         menuPeminjaman = new javax.swing.JMenuItem();
         menuPengembalian = new javax.swing.JMenuItem();
         menuLaporan = new javax.swing.JMenu();
+        menuPinjamanPerBulan = new javax.swing.JMenuItem();
+        menuPeminjamanBuku = new javax.swing.JMenuItem();
+        menuRekapPetugas = new javax.swing.JMenuItem();
         menuExit = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -180,6 +195,31 @@ public class MainForm extends javax.swing.JFrame {
         jMenuBar1.add(menuTransaksi);
 
         menuLaporan.setText("Laporan");
+
+        menuPinjamanPerBulan.setText("Rekap Pinjaman Per Bulan");
+        menuPinjamanPerBulan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuPinjamanPerBulanActionPerformed(evt);
+            }
+        });
+        menuLaporan.add(menuPinjamanPerBulan);
+
+        menuPeminjamanBuku.setText("Rekap Peminjaman Buku");
+        menuPeminjamanBuku.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuPeminjamanBukuActionPerformed(evt);
+            }
+        });
+        menuLaporan.add(menuPeminjamanBuku);
+
+        menuRekapPetugas.setText("Rekap Pelayanan Petugas");
+        menuRekapPetugas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuRekapPetugasActionPerformed(evt);
+            }
+        });
+        menuLaporan.add(menuRekapPetugas);
+
         jMenuBar1.add(menuLaporan);
 
         menuExit.setText("Exit");
@@ -234,6 +274,21 @@ public class MainForm extends javax.swing.JFrame {
         peminjamanView.setVisible(true);
     }//GEN-LAST:event_menuPeminjamanActionPerformed
 
+    private void menuPinjamanPerBulanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPinjamanPerBulanActionPerformed
+        hideAllPanel();
+        laporanPeminjamanView.setVisible(true);
+    }//GEN-LAST:event_menuPinjamanPerBulanActionPerformed
+
+    private void menuPeminjamanBukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuPeminjamanBukuActionPerformed
+        hideAllPanel();
+        laporanPeminjamanBukuView.setVisible(true);
+    }//GEN-LAST:event_menuPeminjamanBukuActionPerformed
+
+    private void menuRekapPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRekapPetugasActionPerformed
+        hideAllPanel();
+        laporanPetugasView.setVisible(true);
+    }//GEN-LAST:event_menuRekapPetugasActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -281,9 +336,12 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenu menuLaporan;
     private javax.swing.JMenu menuMaster;
     private javax.swing.JMenuItem menuPeminjaman;
+    private javax.swing.JMenuItem menuPeminjamanBuku;
     private javax.swing.JMenuItem menuPengembalian;
     private javax.swing.JMenuItem menuPetugas;
+    private javax.swing.JMenuItem menuPinjamanPerBulan;
     private javax.swing.JMenuItem menuRakBuku;
+    private javax.swing.JMenuItem menuRekapPetugas;
     private javax.swing.JMenu menuTransaksi;
     private javax.swing.JPanel panelContent;
     // End of variables declaration//GEN-END:variables

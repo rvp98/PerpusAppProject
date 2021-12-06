@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b740179a-15e0-4ec2-b217-83d88f4538a6">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+  b.`judul_buku`,
+  k.`nama_kategori`,
+  b.`penulis_buku`,
+  b.`penerbit_buku`,
+  b.`tahun_penerbit`,
+  COUNT(pj.`kode_buku`) AS jml_dipinjam
+FROM
+  buku AS b,
+  kategori AS k,
+  peminjaman AS pj
+WHERE
+  b.`kode_buku` = pj.`kode_buku` AND
+  b.`id_kategori` = k.`id_kategori` AND
+  YEAR(pj.`tanggal_pinjam`) = YEAR(NOW()) AND
+  MONTH(pj.`tanggal_pinjam`) = MONTH(NOW())
+GROUP BY b.`kode_buku`;]]>
+	</queryString>
+	<field name="judul_buku" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nama_kategori" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="penulis_buku" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="penerbit_buku" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tahun_penerbit" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="jml_dipinjam" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="22" width="555" height="36" uuid="045464a3-d5e3-40e7-a6eb-b75c5769ef2b"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[LAPORAN PEMINJAMAN BUKU]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="20" width="26" height="20" uuid="f92d46da-ca08-410a-bdf1-a0467ff4fc02"/>
+				<text><![CDATA[NO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="20" width="100" height="20" uuid="20b6ced2-5281-4d24-aa5c-a098aa2abe51"/>
+				<text><![CDATA[Judul Buku]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="152" y="20" width="100" height="20" uuid="a6500e5b-82e8-407b-8a6a-975c3883cc17"/>
+				<text><![CDATA[Nama Kategori]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="277" y="20" width="100" height="20" uuid="99e35ad5-7d7e-492b-aa65-cb876f3888a9"/>
+				<text><![CDATA[Penerbit Buku]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="396" y="20" width="71" height="20" uuid="565f99b1-bfe2-4fb0-a416-099db843ac18"/>
+				<text><![CDATA[Tahun Terbit]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="486" y="9" width="69" height="31" uuid="e003e98a-7da3-487c-9252-0b44c2dfc6a5"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Jumlah Dipinjam]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="53" width="26" height="20" uuid="48d3b492-a30b-45f6-85f8-7816f7a0a5ae"/>
+				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="53" width="100" height="20" uuid="56a5a62c-88b8-4340-87f6-2f80d23eb773"/>
+				<textFieldExpression><![CDATA[$F{judul_buku}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="152" y="53" width="100" height="20" uuid="2142ba96-4ea3-4fcf-ad5f-b38896944d60"/>
+				<textFieldExpression><![CDATA[$F{nama_kategori}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="277" y="53" width="100" height="20" uuid="c3e335fd-09f6-4df0-a738-f98d191cb6f2"/>
+				<textFieldExpression><![CDATA[$F{penerbit_buku}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="396" y="53" width="71" height="20" uuid="4a9a0f9d-ca49-4473-a11e-9794a2f8d026"/>
+				<textFieldExpression><![CDATA[$F{tahun_penerbit}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="511" y="53" width="44" height="20" uuid="e4e16a6a-833c-4357-b2f0-e66434fdc102"/>
+				<textFieldExpression><![CDATA[$F{jml_dipinjam}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

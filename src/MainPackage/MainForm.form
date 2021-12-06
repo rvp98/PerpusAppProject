@@ -78,6 +78,32 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Laporan"/>
           </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="menuPinjamanPerBulan">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Rekap Pinjaman Per Bulan"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuPinjamanPerBulanActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuPeminjamanBuku">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Rekap Peminjaman Buku"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuPeminjamanBukuActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuRekapPetugas">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Rekap Pelayanan Petugas"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuRekapPetugasActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="menuExit">
           <Properties>

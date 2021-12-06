@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="747bd39b-0102-4ca6-97c0-a428b38c2247">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+  p.`nama_petugas`,
+  p.`jk_petugas`,
+  p.`no_telp_petugas`,
+  p.`alamat_petugas`,
+  COUNT(pj.`id_petugas`) AS jml_transaksi
+FROM
+  petugas AS p,
+  peminjaman AS pj
+WHERE p.`id_petugas` = pj.`id_petugas`
+  AND YEAR(pj.`tanggal_pinjam`) = YEAR(NOW())
+  AND MONTH(pj.`tanggal_pinjam`) = MONTH(NOW())
+GROUP BY pj.`id_petugas`]]>
+	</queryString>
+	<field name="nama_petugas" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="jk_petugas" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="no_telp_petugas" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="alamat_petugas" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="jml_transaksi" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="22" width="555" height="36" uuid="de964eaa-0ae4-49e5-9b54-5a69f1de3034"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[LAPORAN PELAYANAN PETUGAS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="22" width="33" height="20" uuid="36020354-bf18-4a9f-96d1-276fc4356522"/>
+				<text><![CDATA[NO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="22" width="100" height="20" uuid="e5ffb435-96bb-4ecf-b6df-de0dd06dbf0a"/>
+				<text><![CDATA[Nama Petugas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="162" y="22" width="100" height="20" uuid="1f7d9ed6-adfa-422e-8861-d3e4d9f01d9e"/>
+				<text><![CDATA[Jenis Kelamin]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="22" width="100" height="20" uuid="d04a46e4-aaae-40eb-9ed5-a38fbcf67a4a"/>
+				<text><![CDATA[No Telp]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="396" y="22" width="55" height="20" uuid="77ebc863-733a-4670-8d5d-1b5ae6815c88"/>
+				<text><![CDATA[Alamat]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="483" y="13" width="51" height="39" uuid="74854f51-f262-4488-a87c-152311d2c580"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Jumlah Transaksi]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="52" width="33" height="20" uuid="4014c7d4-f208-4fe2-a7d5-30641b9520fd"/>
+				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="45" y="52" width="100" height="20" uuid="659e33eb-6312-4dac-9e94-0820154c8fc7"/>
+				<textFieldExpression><![CDATA[$F{nama_petugas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="162" y="52" width="100" height="20" uuid="8526cedd-78db-46a3-a71d-327c639a1522"/>
+				<textFieldExpression><![CDATA[$F{jk_petugas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="52" width="100" height="20" uuid="8d0bd3db-ec1f-4d20-bd0f-2448822f5db6"/>
+				<textFieldExpression><![CDATA[$F{no_telp_petugas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="396" y="52" width="55" height="20" uuid="78086229-184c-41b0-baf3-d6ce7e0273ff"/>
+				<textFieldExpression><![CDATA[$F{alamat_petugas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="483" y="52" width="51" height="20" uuid="217829cc-cd74-4538-9391-14bdf994827f"/>
+				<textFieldExpression><![CDATA[$F{jml_transaksi}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

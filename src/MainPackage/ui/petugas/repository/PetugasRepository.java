@@ -36,6 +36,7 @@ public class PetugasRepository extends Repository<Petugas>{
     public Petugas login(String username, String password) {
         ResultSet result = null;
         Petugas entity = null;
+        System.out.println(HashingHelper.toMd5(password));
         try {
             result = stm.executeQuery("select * from "+tableName()+ getRelationQuery() +" WHERE username = '" + username + "' AND password = '"+ HashingHelper.toMd5(password) +"'");
             ArrayList<Petugas> list = new ArrayList<>();
