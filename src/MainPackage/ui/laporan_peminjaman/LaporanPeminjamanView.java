@@ -121,6 +121,8 @@ public class LaporanPeminjamanView extends javax.swing.JPanel{
         btnTampilkan = new javax.swing.JButton();
         btnCetak = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(197, 239, 248));
+
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         jLabel1.setText("Laporan Peminjaman Per Bulan");
 

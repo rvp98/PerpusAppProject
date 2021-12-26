@@ -104,6 +104,7 @@ public class LaporanPeminjamanBukuView extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblLaporanBuku = new javax.swing.JTable();
 
+        setBackground(new java.awt.Color(197, 239, 248));
         setPreferredSize(new java.awt.Dimension(800, 600));
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
